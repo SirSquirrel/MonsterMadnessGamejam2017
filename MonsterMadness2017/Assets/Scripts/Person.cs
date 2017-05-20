@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Exit {  Left, Right, Top, Bottom };
+
 [RequireComponent(typeof(Collider2D))]
 public class Person : MonoBehaviour
 {
@@ -18,9 +20,7 @@ public class Person : MonoBehaviour
 
     void Start ()
     {
-        this.destination = new Vector2(this.transform.position.x + 0.5f, this.transform.position.y);
-        walking_direction = Vector2.right;
-        prev_destination = this.transform.position;
+
 	}
 	
 
