@@ -73,6 +73,7 @@ public class VNSceneManager : MonoBehaviour
         // Hide UI initially?
         Show_UI(!hide_UI_at_start);
 
+        /*
         // Load text scrolling speed
         Text_Scroll_Speed_Change(PlayerPrefs.GetFloat("TextScrollSpeed", 0.02f));
 
@@ -84,7 +85,7 @@ public class VNSceneManager : MonoBehaviour
 
         // Enable and load multiple fonts
         UIManager.ui_manager.font_drop_down.EnableFontMenu();
-
+        */
         // Start the first conversation
         StartCoroutine(Start_Scene());
 

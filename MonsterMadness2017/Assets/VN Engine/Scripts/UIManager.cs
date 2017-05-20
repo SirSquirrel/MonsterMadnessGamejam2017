@@ -56,7 +56,7 @@ public class UIManager : MonoBehaviour
             Debug.Log("No Localized_UI_CSV specified", this.gameObject);
 
         // Get the current language stored in player prefs
-        Set_Language(PlayerPrefs.GetString("Language", LocalizationManager.Supported_Languages[0]));
+        //Set_Language(PlayerPrefs.GetString("Language", LocalizationManager.Supported_Languages[0]));
     }
 
 
