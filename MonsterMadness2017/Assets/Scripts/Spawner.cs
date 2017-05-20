@@ -42,7 +42,7 @@ public class Spawner : MonoBehaviour
             lightTriggered = true;
         }
 
-        if (lightTriggered && this_light.intensity <= 1)
+        if (lightTriggered && this_light.intensity <= 2)
         {
             this_light.intensity += lightStep * Time.deltaTime;
         }
@@ -58,7 +58,7 @@ public class Spawner : MonoBehaviour
             soundPlayed = false;
             animPlayed = false;
             lightTriggered = false;
-            this_light.intensity = 0;
+            this_light.intensity = 0.5f;
             cur_spawn_delay = spawn_delay;
             Spawn();
 
