@@ -17,6 +17,8 @@ public class Person : MonoBehaviour
     public Tile cur_tile;
     Tile touched_tile;
 
+    float time_alive = 0f;
+
 
     void Start ()
     {
@@ -26,6 +28,8 @@ public class Person : MonoBehaviour
 
 	void Update ()
     {
+        time_alive += Time.deltaTime;
+
         if (cur_tile == null)
             Debug.LogError("Person is not on a tile!", this.gameObject);
         if (destination == null)
@@ -51,7 +55,6 @@ public class Person : MonoBehaviour
                     Vector2 temp = destination;
                     destination = prev_destination;
                     prev_destination = temp;
-                    Debug.Log("Dead end");
                 }
                 else
                 {
@@ -66,7 +69,6 @@ public class Person : MonoBehaviour
                     prev_destination = destination;
                     walking_direction = new_dir;
                     destination = destination + new_dir / 2f;
-                    Debug.Log("Intersection");
                 }
             }
             // Or at the edge of a tile
@@ -80,7 +82,6 @@ public class Person : MonoBehaviour
                     prev_destination = destination;
                     // Walk to center of new tile
                     destination = cur_tile.transform.position;
-                    Debug.Log("Continue walking");
                 }
                 else
                 {
@@ -89,7 +90,6 @@ public class Person : MonoBehaviour
                     Vector2 temp = destination;
                     destination = prev_destination;
                     prev_destination = temp;
-                    Debug.Log("Can't walk into new tile");
                 }
             }
 
@@ -176,9 +176,8 @@ public class Person : MonoBehaviour
         if (collision.tag == "Tile")
         {
             touched_tile = collision.gameObject.GetComponent<Tile>();
-            Debug.Log("Tile");
         }
-        else if (collision.tag == "Exit")
+        else if (collision.tag == "Exit" && time_alive > 1f)
         {
             Debug.Log("Person has escaped the mansion!", this.gameObject);
             GameState.game_state.Defeat();
