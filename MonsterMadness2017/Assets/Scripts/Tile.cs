@@ -114,7 +114,7 @@ public class Tile : MonoBehaviour
             return null;
     }
 
-    void OnTriggerEnter2D(Collider other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.tag == "Person")
         {
@@ -122,12 +122,14 @@ public class Tile : MonoBehaviour
             man_on_tile_count = man_on_tile_count + 1;
             if(TileManager.tileManager.curTileSelected == this)
             {
-
+                TileManager.tileManager.hasTileSelected = false;
+                TileManager.tileManager.curTileSelected = null;
+                Destroy(TileManager.tileManager.highlight);
             }
         }
     }
 
-    void OnTriggerExit2D(Collider other)
+    void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.tag == "Person")
         {
