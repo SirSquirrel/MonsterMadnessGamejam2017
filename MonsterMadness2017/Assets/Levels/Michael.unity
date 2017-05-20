@@ -365,11 +365,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114069926022143746, guid: c1e76103f72967f4495cc11b77e31afd,
-        type: 2}
-      propertyPath: endless_mode
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c1e76103f72967f4495cc11b77e31afd, type: 2}
   m_IsPrefabParent: 0
