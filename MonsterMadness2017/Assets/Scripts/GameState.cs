@@ -17,20 +17,27 @@ public class GameState : MonoBehaviour
     public bool victory_counting_down = false;
     [HideInInspector]
     public float victory_countdown_timer = 30f;
+    Canvas canvas;
+    [HideInInspector]
+    public Text timer;
 
     public string next_level = "";
     public string defeat_level = "MainMenu";
 
-    float game_over_wait = 5f;
+    float elapsed_time = 0;
+    float game_over_wait = 4.5f;
 
-    Canvas canvas;
 
 
     void Awake ()
     {
         game_state = this;
         canvas = GameObject.FindObjectOfType<Canvas>();
-	}
+        timer = canvas.GetComponentInChildren<Text>(true);
+
+        GameObject go = Instantiate(Resources.Load("FadeOutBlack") as GameObject, canvas.transform);
+        go.transform.localScale = Vector3.one;
+    }
 
 
     public void CheckVictory()
@@ -39,6 +46,7 @@ public class GameState : MonoBehaviour
         {
             // Start the countdown to victory
             victory_counting_down = true;
+            timer.gameObject.SetActive(true);
         }
     }
 	
@@ -58,7 +66,10 @@ public class GameState : MonoBehaviour
     }
     IEnumerator VictoryCoroutine()
     {
-        yield return new WaitForSeconds(game_over_wait);
+        yield return new WaitForSeconds(game_over_wait - 1.1f);
+        GameObject go = Instantiate(Resources.Load("FadeInBlack") as GameObject, canvas.transform);
+        go.transform.localScale = Vector3.one;
+        yield return new WaitForSeconds(1.1f);
         UnityEngine.SceneManagement.SceneManager.LoadScene(next_level);
     }
     public void Defeat()
@@ -70,24 +81,38 @@ public class GameState : MonoBehaviour
         Debug.Log("Defeat!", this.gameObject);
 
         GameObject go = Instantiate(Resources.Load("EndLevelText") as GameObject, canvas.transform);
+        go.transform.localScale = Vector3.one;
         go.GetComponent<Text>().text = "Mortal Escaped!";
 
         StartCoroutine(DefeatCoroutine());
     }
     IEnumerator DefeatCoroutine()
     {
-        yield return new WaitForSeconds(game_over_wait);
+        yield return new WaitForSeconds(game_over_wait - 1.1f);
+        GameObject go = Instantiate(Resources.Load("FadeInBlack") as GameObject, canvas.transform);
+        go.transform.localScale = Vector3.one;
+        yield return new WaitForSeconds(1.1f);
         UnityEngine.SceneManagement.SceneManager.LoadScene(defeat_level);
     }
 
 
 	void Update ()
     {
-		if (victory_counting_down)
+        elapsed_time += Time.deltaTime;
+
+        if (victory_counting_down && !game_over)
         {
             victory_countdown_timer -= Time.deltaTime;
+            timer.text = "Time till victory: " + victory_countdown_timer;
             if (victory_countdown_timer <= 0)
+            {
+                timer.gameObject.SetActive(false);
                 Victory();
+            }
+        }
+        else if (endless_mode)
+        {
+            timer.text = "" + elapsed_time;
         }
 	}
 }
