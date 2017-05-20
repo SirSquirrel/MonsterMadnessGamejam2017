@@ -161,6 +161,8 @@ public class Tile : MonoBehaviour
         Vector3 cur_position = transform.position;
         transform.position = TileManager.tileManager.curTileSelected.transform.position;
         tile_to_swap.transform.position = cur_position;
+        Instantiate(Resources.Load("smoke_puff"),transform.position,transform.rotation);
+        Instantiate(Resources.Load("smoke_puff"), cur_position, transform.rotation);
         Find_Neighbours();
 
         //have all neighbours re-evaluate as well
