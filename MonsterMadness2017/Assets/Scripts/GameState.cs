@@ -35,6 +35,9 @@ public class GameState : MonoBehaviour
         canvas = GameObject.FindObjectOfType<Canvas>();
         timer = canvas.GetComponentInChildren<Text>(true);
 
+        if (endless_mode)
+            timer.gameObject.SetActive(true);
+
         GameObject go = Instantiate(Resources.Load("FadeOutBlack") as GameObject, canvas.transform);
         go.transform.localScale = Vector3.one;
     }
@@ -114,5 +117,8 @@ public class GameState : MonoBehaviour
         {
             timer.text = "" + elapsed_time;
         }
-	}
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+    }
 }
