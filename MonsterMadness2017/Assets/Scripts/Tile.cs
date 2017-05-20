@@ -41,6 +41,15 @@ public class Tile : MonoBehaviour
     void Start()
     {
         Find_Neighbours();
+
+        if (top_exit)
+            entrances++;
+        if (bottom_exit)
+            entrances++;
+        if (left_exit)
+            entrances++;
+        if (right_exit)
+            entrances++;
     }
 
     void OnMouseOver()
