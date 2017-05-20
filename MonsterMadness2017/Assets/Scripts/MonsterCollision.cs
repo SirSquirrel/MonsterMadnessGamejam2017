@@ -19,6 +19,7 @@ public class MonsterCollision : MonoBehaviour {
     {
         if(collider.gameObject.tag.Equals("Person"))
         {
+            GameState.game_state.Victims.Remove(collider.gameObject);
             Destroy(collider.gameObject);
             scream.Play();
             Instantiate(Resources.Load("blood"), transform.position, transform.rotation);
