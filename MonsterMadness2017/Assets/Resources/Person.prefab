@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.0012
-  animationSpeed: 3
+  animationSpeed: 2
   opposite: 1
 --- !u!114 &114558826458670246
 MonoBehaviour:
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.0012
-  animationSpeed: 3
+  animationSpeed: 2
   opposite: 0
 --- !u!114 &114859234657844778
 MonoBehaviour:
