@@ -10,6 +10,9 @@ public class Spawner : MonoBehaviour
     float cur_spawn_delay = 0;
     public float initial_spawn_delay = 60f;
     public float spawn_delay = 20f;
+    public bool soundPlayed = false;
+
+    public AudioSource[] sounds;
     Tile this_tile;
 
 
@@ -24,9 +27,15 @@ public class Spawner : MonoBehaviour
     void Update ()
     {
         cur_spawn_delay -= Time.deltaTime;
+        if(cur_spawn_delay <=5 && !soundPlayed)
+        {
+            sounds[0].Play();
+            soundPlayed = true;
+        }
 
         if (cur_spawn_delay <= 0)
         {
+            soundPlayed = false;
             cur_spawn_delay = spawn_delay;
             Spawn();
 
@@ -51,6 +60,8 @@ public class Spawner : MonoBehaviour
         go.transform.position = this.transform.position;
         Person p = go.GetComponent<Person>();
         p.prev_destination = this.transform.position;
+
+        sounds[1].Play();
 
         // Set their current tile
         p.cur_tile = this_tile;

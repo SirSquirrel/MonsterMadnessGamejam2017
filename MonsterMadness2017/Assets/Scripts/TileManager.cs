@@ -8,6 +8,7 @@ public class TileManager : MonoBehaviour {
     public Tile curTileSelected;
     public bool hasTileSelected;
     public GameObject highlight;
+    public AudioSource[] Sounds;
 
 	// Use this for initialization
 	void Start () {
@@ -40,4 +41,11 @@ public class TileManager : MonoBehaviour {
             }
         }
     }
+
+    public void PlaySwapSound()
+    {
+        int rand = Random.Range(0,Sounds.Length);
+        Sounds[rand].Play();
+    }
+
 }
