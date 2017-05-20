@@ -1739,6 +1739,11 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 82677765299991302, guid: 8c3fbfa36ac08154d82c172af7019c63,
+        type: 2}
+      propertyPath: m_Volume
+      value: 0.15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8c3fbfa36ac08154d82c172af7019c63, type: 2}
   m_IsPrefabParent: 0
@@ -2251,7 +2256,7 @@ Prefab:
     - target: {fileID: 114572084363731948, guid: 47e09efd0aff457408c20a93cc8c4732,
         type: 2}
       propertyPath: initial_spawn_delay
-      value: 10
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 114572084363731948, guid: 47e09efd0aff457408c20a93cc8c4732,
         type: 2}
