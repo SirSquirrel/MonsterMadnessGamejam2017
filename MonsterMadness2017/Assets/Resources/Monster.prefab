@@ -36,11 +36,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4443560868427140}
   - component: {fileID: 58919728548253972}
-  - component: {fileID: 114748065065300334}
   - component: {fileID: 50674400958540492}
   - component: {fileID: 212369422384370364}
   - component: {fileID: 114565312470637580}
   - component: {fileID: 82247779570229874}
+  - component: {fileID: 114105345272670574}
   m_Layer: 11
   m_Name: Monster
   m_TagString: Monster
@@ -55,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1845190823743548}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.91, y: 2.011, z: 4.491891}
+  m_LocalPosition: {x: 4.91, y: 1.01, z: 4.491891}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4769727064339412}
@@ -223,6 +223,24 @@ Light:
   m_BounceIntensity: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &114105345272670574
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1845190823743548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71750d76ca77bfb45b24c050b77100ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walking_direction: {x: 0, y: 0}
+  walking_speed: 1.5
+  destination: {x: 0, y: 0}
+  prev_destination: {x: 0, y: 0}
+  progress_towards_destination: 0
+  cur_tile: {fileID: 0}
+  rotationSpeed: 5
 --- !u!114 &114565312470637580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -235,24 +253,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scream: {fileID: 82247779570229874}
---- !u!114 &114748065065300334
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1845190823743548}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef1db9659e155fd49962fd7cf64e1928, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walking_direction: {x: 1, y: 0}
-  walking_speed: 1.5
-  destination: {x: -3.5, y: 2}
-  prev_destination: {x: -4, y: 2}
-  progress_towards_destination: 0
-  cur_tile: {fileID: 0}
-  rotationSpeed: 5
 --- !u!212 &212369422384370364
 SpriteRenderer:
   m_ObjectHideFlags: 1
