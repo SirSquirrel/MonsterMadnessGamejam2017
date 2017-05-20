@@ -8,16 +8,19 @@ public class Person : MonoBehaviour
     public Vector2 walking_direction;
     public float walking_speed = 1.0f;
 
-    Vector2 destination;
-    Vector2 prev_destination;
-    float progress_towards_destination;
+    public Vector2 destination;
+    public Vector2 prev_destination;
+    public float progress_towards_destination = 0;
 
-    Tile cur_tile;
+    public Tile cur_tile;
+    Tile touched_tile;
 
 
     void Start ()
     {
-		
+        this.destination = new Vector2(this.transform.position.x + 0.5f, this.transform.position.y);
+        walking_direction = Vector2.right;
+        prev_destination = this.transform.position;
 	}
 	
 
@@ -28,48 +31,152 @@ public class Person : MonoBehaviour
         if (destination == null)
             Debug.LogError("Person  has no destination", this.gameObject);
 
-
-        // Walk towards the destination
-        Vector2 new_pos = (Vector2) transform.position + walking_direction * walking_speed;
-        Vector2 current_pos = this.transform.position;
-
+        // Walk towards destination
         progress_towards_destination += walking_speed * Time.deltaTime;
-        this.transform.position = Vector2.Lerp(prev_destination, destination, Mathf.Min(0, progress_towards_destination));
+        this.transform.position = Vector2.Lerp(prev_destination, destination, Mathf.Min(1, progress_towards_destination));
         
         // Did we make it to where we wanted to go?
         if (progress_towards_destination >= 1)
         {
             // Get a new destination
             // Either at the center of a tile
-            if (this.transform.position.x % 1f == 0)
+            Debug.Log(this.transform.position.x % 1f);
+            if (Mathf.Abs(this.transform.position.x % 1f) == 0f && Mathf.Abs(this.transform.position.y % 1f) == 0f)
             {
                 // Determine which direction to go (from which is allowed)
-                // Check if this is a dead end, go back the way we came
-                this.walking_direction = -walking_direction;
-                Vector2 temp = destination;
-                destination = prev_destination;
-                prev_destination = temp;
-
-                // Not a dead end
+                if (cur_tile.entrances == 1)
+                {
+                    // Dead end, go back the way we came
+                    this.walking_direction = -walking_direction;
+                    Vector2 temp = destination;
+                    destination = prev_destination;
+                    prev_destination = temp;
+                    Debug.Log("Dead end");
+                }
+                else
+                {
+                    // There is more than one entrance, go the direction we weren't going before
+                    Vector2 new_dir = -walking_direction;
+                    // Keep picking until we get a new direction
+                    while (new_dir == -walking_direction)
+                    {
+                        new_dir = Get_Random_Direction();
+                        Debug.Log(new_dir + " : " + -walking_direction);
+                    }
+                    prev_destination = destination;
+                    walking_direction = new_dir;
+                    destination = destination + new_dir / 2f;
+                    Debug.Log("Intersection");
+                }
             }
             // Or at the edge of a tile
             else
             {
-                // Walk to center of new tile
-                destination = cur_tile.transform.position;
-
-                // Set prev destination
-                prev_destination = destination;
+                // Can we keep walking?
+                if (Can_Walk_Onto_New_Tile())
+                {
+                    cur_tile = touched_tile;
+                    // Set prev destination
+                    prev_destination = destination;
+                    // Walk to center of new tile
+                    destination = cur_tile.transform.position;
+                    Debug.Log("Continue walking");
+                }
+                else
+                {
+                    // Dead end, go back the way we came
+                    this.walking_direction = -walking_direction;
+                    Vector2 temp = destination;
+                    destination = prev_destination;
+                    prev_destination = temp;
+                    Debug.Log("Can't walk into new tile");
+                }
             }
+
+            progress_towards_destination -= 1;
         }
 	}
+
+
+    public Vector2 Get_Random_Direction()
+    {
+        Vector2 new_dir = Vector2.zero;
+
+        // Keep picking until we get a new direction
+        while (new_dir == Vector2.zero)
+        {
+            int random = Random.Range(0, 4);
+            switch (random)
+            {
+                case 0:
+                    // Left
+                    if (cur_tile.left_exit)
+                        new_dir = Vector2.left;
+                    break;
+                case 1:
+                    // Right
+                    if (cur_tile.right_exit)
+                        new_dir = Vector2.right;
+                    break;
+                case 2:
+                    // Top
+                    if (cur_tile.top_exit)
+                        new_dir = Vector2.up;
+                    break;
+                case 3:
+                    // Bottom
+                    if (cur_tile.bottom_exit)
+                        new_dir = Vector2.down;
+                    break;
+            }
+        }
+
+        return new_dir;
+    }
+
+
+    public bool Can_Walk_Onto_New_Tile()
+    {
+        if (walking_direction == Vector2.left)
+        {
+            if (cur_tile.can_go_left)
+                return true;
+            else
+                return false;
+        }
+        else if (walking_direction == Vector2.right)
+        {
+            if (cur_tile.can_go_right)
+                return true;
+            else
+                return false;
+        }
+        else if (walking_direction == Vector2.up)
+        {
+            if (cur_tile.can_go_top)
+                return true;
+            else
+                return false;
+        }
+        else if (walking_direction == Vector2.down)
+        {
+            if (cur_tile.can_go_bottom)
+                return true;
+            else
+                return false;
+        }
+
+        return false;
+    }
+
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Tile")
         {
-            cur_tile = collision.gameObject.GetComponent<Tile>();
+            touched_tile = collision.gameObject.GetComponent<Tile>();
+            Debug.Log("Tile");
         }
         else if (collision.tag == "Exit")
         {
