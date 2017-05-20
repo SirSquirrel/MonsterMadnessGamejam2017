@@ -22,7 +22,7 @@ public class Person : MonoBehaviour
 
     void Start ()
     {
-
+        GameState.game_state.Victims.Add(this.gameObject);
 	}
 	
 
