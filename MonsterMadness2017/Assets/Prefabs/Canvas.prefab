@@ -193,7 +193,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4090735364818552}
   - component: {fileID: 114407300560278006}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: FurnitureSpriteList
   m_TagString: Untagged
   m_Icon: {fileID: 0}

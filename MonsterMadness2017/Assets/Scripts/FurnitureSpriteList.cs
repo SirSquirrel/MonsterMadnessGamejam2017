@@ -6,7 +6,7 @@ public class FurnitureSpriteList : MonoBehaviour {
     public Sprite[] furnitureSprites;
     public static FurnitureSpriteList furnitureSpriteList;
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         furnitureSpriteList = this;
     }
