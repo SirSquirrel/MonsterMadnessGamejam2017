@@ -15,6 +15,7 @@ public class Spawner : MonoBehaviour
     public bool animPlayed = false;
     public bool lightTriggered = false;
 
+
     public AudioSource[] sounds;
     Tile this_tile;
     Animator this_anim;
