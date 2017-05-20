@@ -27,6 +27,7 @@ public class GameState : MonoBehaviour
     float elapsed_time = 0;
     float game_over_wait = 4.5f;
 
+    public GameObject game_over_text_options;
 
 
     void Awake ()
@@ -80,18 +81,28 @@ public class GameState : MonoBehaviour
         GameObject go = Instantiate(Resources.Load("EndLevelText") as GameObject, canvas.transform);
         go.transform.localScale = Vector3.one;
         go.GetComponent<Text>().text = "Mortal Escaped!";
+        StartCoroutine(DefeatCoroutine());
+    }
+    IEnumerator DefeatCoroutine()
+    {
+        yield return new WaitForSeconds(game_over_wait - 0.5f);
+        game_over_text_options.SetActive(true);
     }
 
 
     public IEnumerator LoadSceneDelayed(float delay, string scene, bool fade_out)
     {
+        delay = Mathf.Max(1, delay);
+
+        yield return new WaitForSeconds(delay - 1);
+
         if (fade_out)
         {
             GameObject go = Instantiate(Resources.Load("FadeInBlack") as GameObject, canvas.transform);
             go.transform.localScale = Vector3.one;
         }
 
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(1f);
 
         UnityEngine.SceneManagement.SceneManager.LoadScene(scene);
     }
@@ -121,7 +132,7 @@ public class GameState : MonoBehaviour
             if (Input.GetButtonDown("Submit") || Input.GetKeyDown(KeyCode.Y))
             {
                 // Retry this level
-                StartCoroutine(LoadSceneDelayed(1.02f), UnityEngine.SceneManagement.SceneManager.GetActiveScene().name, true);
+                StartCoroutine(LoadSceneDelayed(1.02f, UnityEngine.SceneManagement.SceneManager.GetActiveScene().name, true));
                 defeated = false;
             }
             else if (Input.GetButtonDown("Cancel") || Input.GetKey(KeyCode.N))
@@ -136,6 +147,16 @@ public class GameState : MonoBehaviour
         {
             // Restart level
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        }
+
+
+        if (Time.timeScale != 0 && Input.GetKey(KeyCode.BackQuote))
+        {
+            Time.timeScale = 5.0f;
+        }
+        else if (Time.timeScale != 0)
+        {
+            Time.timeScale = 1.0f;
         }
     }
 }
