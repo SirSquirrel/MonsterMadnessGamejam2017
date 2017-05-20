@@ -184,6 +184,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &1349066474020308
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4090735364818552}
+  - component: {fileID: 114407300560278006}
+  m_Layer: 5
+  m_Name: FurnitureSpriteList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1354395472880804
 GameObject:
   m_ObjectHideFlags: 1
@@ -663,6 +679,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 224961139496880160}
   m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4090735364818552
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1349066474020308}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 224961139496880160}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4413870870508886
 Transform:
@@ -1704,6 +1733,31 @@ MonoBehaviour:
   pause_voices_when_paused: 0
   pause_music_when_paused: 0
   paused: 0
+--- !u!114 &114407300560278006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1349066474020308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38c64567db762dd4b9ec38f021e8e52d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  furnitureSprites:
+  - {fileID: 21300000, guid: 7822758a05e08e3448fe971a120d17a4, type: 3}
+  - {fileID: 21300002, guid: 7822758a05e08e3448fe971a120d17a4, type: 3}
+  - {fileID: 21300004, guid: 7822758a05e08e3448fe971a120d17a4, type: 3}
+  - {fileID: 21300006, guid: 7822758a05e08e3448fe971a120d17a4, type: 3}
+  - {fileID: 21300008, guid: 7822758a05e08e3448fe971a120d17a4, type: 3}
+  - {fileID: 21300010, guid: 7822758a05e08e3448fe971a120d17a4, type: 3}
+  - {fileID: 21300012, guid: 7822758a05e08e3448fe971a120d17a4, type: 3}
+  - {fileID: 21300014, guid: 7822758a05e08e3448fe971a120d17a4, type: 3}
+  - {fileID: 21300016, guid: 7822758a05e08e3448fe971a120d17a4, type: 3}
+  - {fileID: 21300018, guid: 7822758a05e08e3448fe971a120d17a4, type: 3}
+  - {fileID: 21300020, guid: 7822758a05e08e3448fe971a120d17a4, type: 3}
+  - {fileID: 21300022, guid: 7822758a05e08e3448fe971a120d17a4, type: 3}
+  - {fileID: 21300024, guid: 7822758a05e08e3448fe971a120d17a4, type: 3}
 --- !u!114 &114452602763911326
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2912,7 +2966,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224961139496880160}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3136,7 +3190,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224961139496880160}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3323,7 +3377,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224961139496880160}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3341,7 +3395,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224961139496880160}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3384,6 +3438,7 @@ RectTransform:
   - {fileID: 4595016426416850}
   - {fileID: 4048069946167156}
   - {fileID: 4035472147671050}
+  - {fileID: 4090735364818552}
   - {fileID: 224807376958222696}
   - {fileID: 224252775295795584}
   - {fileID: 224553350847373024}
