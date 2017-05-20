@@ -23,16 +23,27 @@ public class Tile : MonoBehaviour
     public bool can_go_top = false;
     public bool can_go_bottom = false;
 
+    public int exits = 0;
+
+    //whether the tile is currently being selected to swap
+    public bool selected = false;
 
     void Start ()
     {
         Find_Neighbours();
 	}
 
+    void OnMouseOver()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Selected");
+        }
+    }
 
     void Update ()
     {
-		
+        
 	}
 
 
@@ -62,9 +73,32 @@ public class Tile : MonoBehaviour
 
     public void CalculateExits()
     {
+        exits = 0;
         can_go_left = left_neighbour != null && left_exit && left_neighbour.right_exit ? true : false;
+        if(can_go_left)
+        {
+            exits = exits + 1;
+        }
         can_go_right = right_neighbour != null && right_exit && right_neighbour.left_exit ? true : false;
+        if (can_go_right)
+        {
+            exits = exits + 1;
+        }
         can_go_top = top_neighbour != null && top_exit && top_neighbour.bottom_exit ? true : false;
+        if (can_go_top)
+        {
+            exits = exits + 1;
+        }
         can_go_bottom = bottom_neighbour != null && bottom_exit && bottom_neighbour.top_exit ? true : false;
+        if (can_go_bottom)
+        {
+            exits = exits + 1;
+        }
+    }
+
+    public bool IsPersonOnTile()
+    {
+        //todo when we figure out how people work
+        return false;
     }
 }
