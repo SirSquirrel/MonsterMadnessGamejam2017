@@ -10,18 +10,22 @@ public class Spawner : MonoBehaviour
     float cur_spawn_delay = 0;
     public float initial_spawn_delay = 60f;
     public float spawn_delay = 20f;
+    public float lightStep = 10;
     public bool soundPlayed = false;
     public bool animPlayed = false;
+    public bool lightTriggered = false;
 
     public AudioSource[] sounds;
     Tile this_tile;
     Animator this_anim;
+    Light this_light;
 
     void Start ()
     {
         cur_spawn_delay = initial_spawn_delay;
         this_tile = this.GetComponent<Tile>();
         this_anim = this.GetComponentInChildren<Animator>();
+        this_light = this.GetComponentInChildren<Light>();
         GameState.game_state.spawners.Add(this);
 
 	}
@@ -34,6 +38,12 @@ public class Spawner : MonoBehaviour
         {
             sounds[0].Play();
             soundPlayed = true;
+            lightTriggered = true;
+        }
+
+        if (lightTriggered && this_light.intensity <= 1)
+        {
+            this_light.intensity += lightStep * Time.deltaTime;
         }
 
         if (cur_spawn_delay <= 1 && !animPlayed)
@@ -46,6 +56,8 @@ public class Spawner : MonoBehaviour
         {
             soundPlayed = false;
             animPlayed = false;
+            lightTriggered = false;
+            this_light.intensity = 0;
             cur_spawn_delay = spawn_delay;
             Spawn();
 
