@@ -40,7 +40,7 @@ public class Spawner : MonoBehaviour
             Spawn();
 
             // Spawners only decrease numbers if not on endless mode
-            if (!GameState.game_state.endless_mode)
+            if (!Settings.Endless_Mode)
             {
                 people_to_spawn--;
 

@@ -11,7 +11,6 @@ public class GameState : MonoBehaviour
     public List<GameObject> Victims;
     public List<Spawner> spawners;
 
-    public bool endless_mode = false;   // If set to true, spawners will never run out of people
     public bool game_over = false;
 
     public bool victory_counting_down = false;
@@ -35,7 +34,7 @@ public class GameState : MonoBehaviour
         canvas = GameObject.FindObjectOfType<Canvas>();
         timer = canvas.GetComponentInChildren<Text>(true);
 
-        if (endless_mode)
+        if (Settings.Endless_Mode)
             timer.gameObject.SetActive(true);
 
         GameObject go = Instantiate(Resources.Load("FadeOutBlack") as GameObject, canvas.transform);
@@ -113,7 +112,7 @@ public class GameState : MonoBehaviour
                 Victory();
             }
         }
-        else if (endless_mode)
+        else if (Settings.Endless_Mode)
         {
             timer.text = "" + elapsed_time;
         }
