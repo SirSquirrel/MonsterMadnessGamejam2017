@@ -30,46 +30,53 @@ public class Tile : MonoBehaviour
     //whether the tile is currently being selected to swap
     public bool selected = false;
 
+    public GameObject temporary_highlight;
+
     //whether the tile can be swapped, set to false for entrances and exits
     public bool can_be_swapped = true;
 
-    void Start ()
+    void Start()
     {
         Find_Neighbours();
-
-        if (left_exit)
-            entrances++;
-        if (right_exit)
-            entrances++;
-        if (top_exit)
-            entrances++;
-        if (bottom_exit)
-            entrances++;
-	}
+    }
 
     void OnMouseOver()
     {
+        if (!TileManager.tileManager.hasTileSelected && temporary_highlight == null)
+        {
+
+            temporary_highlight = (GameObject)Instantiate(Resources.Load("TemporaryHighlight"), transform.position, transform.rotation);
+        }
+
         if (can_be_swapped)
         {
-            if (Input.GetMouseButtonDown(0) && !TileManager.tileManager.hasTileSelected)
+            if (Input.GetMouseButtonDown(0) && !TileManager.tileManager.hasTileSelected && !IsPersonOnTile())
             {
                 Debug.Log("Selected");
                 TileManager.tileManager.hasTileSelected = true;
                 TileManager.tileManager.curTileSelected = this;
+                Destroy(temporary_highlight);
+                TileManager.tileManager.highlight = (GameObject)Instantiate(Resources.Load("Highlight"), transform.position, transform.rotation);
             }
             else if (Input.GetMouseButtonDown(0) && TileManager.tileManager.hasTileSelected)
             {
                 Swap();
                 TileManager.tileManager.hasTileSelected = false;
                 TileManager.tileManager.curTileSelected = null;
+                Destroy(TileManager.tileManager.highlight);
             }
         }
     }
 
-    void Update ()
+    void OnMouseExit()
     {
-        
-	}
+        Destroy(temporary_highlight);
+    }
+
+    void Update()
+    {
+
+    }
 
 
     public void Find_Neighbours()
@@ -100,7 +107,7 @@ public class Tile : MonoBehaviour
     {
         exits = 0;
         can_go_left = left_neighbour != null && left_exit && left_neighbour.right_exit ? true : false;
-        if(can_go_left)
+        if (can_go_left)
         {
             exits = exits + 1;
         }
@@ -130,7 +137,7 @@ public class Tile : MonoBehaviour
         Find_Neighbours();
 
         //have all neighbours re-evaluate as well
-        if(left_neighbour!=null)
+        if (left_neighbour != null)
             left_neighbour.GetComponent<Tile>().Find_Neighbours();
 
         if (right_neighbour != null)
@@ -141,7 +148,7 @@ public class Tile : MonoBehaviour
 
         if (bottom_neighbour != null)
             bottom_neighbour.GetComponent<Tile>().Find_Neighbours();
-        
+
         tile_to_swap.transform.position = cur_position;
         tile_to_swap.Find_Neighbours();
 
@@ -165,7 +172,4 @@ public class Tile : MonoBehaviour
         //todo when we figure out how people work
         return false;
     }
-
-
-
 }
