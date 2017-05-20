@@ -28,6 +28,9 @@ public class Tile : MonoBehaviour
     //whether the tile is currently being selected to swap
     public bool selected = false;
 
+    //whether the tile can be swapped, set to false for entrances and exits
+    public bool can_be_swapped = true;
+
     void Start ()
     {
         Find_Neighbours();
@@ -35,9 +38,20 @@ public class Tile : MonoBehaviour
 
     void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (can_be_swapped)
         {
-            Debug.Log("Selected");
+            if (Input.GetMouseButtonDown(0) && !TileManager.tileManager.hasTileSelected)
+            {
+                Debug.Log("Selected");
+                TileManager.tileManager.hasTileSelected = true;
+                TileManager.tileManager.curTileSelected = this;
+            }
+            else if (Input.GetMouseButtonDown(0) && TileManager.tileManager.hasTileSelected)
+            {
+                Swap();
+                TileManager.tileManager.hasTileSelected = false;
+                TileManager.tileManager.curTileSelected = null;
+            }
         }
     }
 
@@ -94,6 +108,45 @@ public class Tile : MonoBehaviour
         {
             exits = exits + 1;
         }
+    }
+
+    public void Swap()
+    {
+        Tile tile_to_swap = TileManager.tileManager.curTileSelected;
+
+        Vector3 cur_position = transform.position;
+        transform.position = TileManager.tileManager.curTileSelected.transform.position;
+        Find_Neighbours();
+
+        //have all neighbours re-evaluate as well
+        if(left_neighbour!=null)
+            left_neighbour.GetComponent<Tile>().Find_Neighbours();
+
+        if (right_neighbour != null)
+            right_neighbour.GetComponent<Tile>().Find_Neighbours();
+
+        if (top_neighbour != null)
+            top_neighbour.GetComponent<Tile>().Find_Neighbours();
+
+        if (bottom_neighbour != null)
+            bottom_neighbour.GetComponent<Tile>().Find_Neighbours();
+        
+        tile_to_swap.transform.position = cur_position;
+        tile_to_swap.Find_Neighbours();
+
+        if (tile_to_swap.left_neighbour != null)
+            tile_to_swap.left_neighbour.GetComponent<Tile>().Find_Neighbours();
+
+        if (tile_to_swap.right_neighbour != null)
+            tile_to_swap.right_neighbour.GetComponent<Tile>().Find_Neighbours();
+
+        if (tile_to_swap.top_neighbour != null)
+            tile_to_swap.top_neighbour.GetComponent<Tile>().Find_Neighbours();
+
+        if (tile_to_swap.bottom_neighbour != null)
+            tile_to_swap.bottom_neighbour.GetComponent<Tile>().Find_Neighbours();
+
+        Debug.Log("swap");
     }
 
     public bool IsPersonOnTile()
