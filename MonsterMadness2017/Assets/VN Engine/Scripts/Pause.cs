@@ -82,7 +82,7 @@ public class Pause : MonoBehaviour
 
     void Update ()
     {
-        if (Input.GetButtonDown(toggle_pause_key))
+        if (Input.GetButtonDown(toggle_pause_key) && !GameState.game_state.game_over)
             Toggle_Pause();
 
         // Record time played here
