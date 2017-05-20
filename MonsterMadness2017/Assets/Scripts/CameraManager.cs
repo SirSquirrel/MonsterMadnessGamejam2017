@@ -33,11 +33,11 @@ public class CameraManager : MonoBehaviour
             if (go.transform.position.x >= max_width)
                 max_width = go.transform.position.x;
             if (go.transform.position.y >= max_height)
-                max_height = go.transform.position.x;
+                max_height = go.transform.position.y;
             if (go.transform.position.x <= min_width)
                 min_width = go.transform.position.x;
             if (go.transform.position.y <= min_height)
-                min_height = go.transform.position.x;
+                min_height = go.transform.position.y;
         }
 
         SetZoomLevel(GetOrphographicZoomToFit(min_width, min_height, max_width, max_height));
@@ -45,19 +45,23 @@ public class CameraManager : MonoBehaviour
     public float GetOrphographicZoomToFit(float min_x, float min_y, float max_x, float max_y)
     {
         // Determine largest X/Y constraint
-        float x_constraint = Mathf.Max(Mathf.Abs(min_x), Mathf.Abs(max_x)) + 1f;
-        float y_constraint = Mathf.Max(Mathf.Abs(min_y), Mathf.Abs(max_y)) + 1f;
-
+        float x_constraint = Mathf.Max(Mathf.Abs(min_x), Mathf.Abs(max_x)) + 0.5f;
+        float y_constraint = Mathf.Max(Mathf.Abs(min_y), Mathf.Abs(max_y)) + 0.5f;
+        Debug.Log(min_x + " " + min_y + ":" + max_x + " " + max_y);
         // Figure out if we should worry about width or height
         float y_zoom = y_constraint / 2;
         float x_zoom = x_constraint / Screen.width * Screen.height;
+        //x_zoom /= 2;
+        y_zoom *= 2;
+        //y_zoom = y_constraint + 0.5f;
 
         // Reference equations we must solve for
         //float screenHeightInUnits = Camera.main.orthographicSize * 2;
         //float screenWidthInUnits = screenHeightInUnits * Screen.width / Screen.height; // basically height * screen aspect ratio
-
         // Add 1 because we have 0.5 extra space on each side
         float needed_zoom = Mathf.Max(x_zoom, y_zoom);
+        Debug.Log(x_zoom + ":" + y_zoom + ", " + needed_zoom);
+
         return needed_zoom;
     }
 
