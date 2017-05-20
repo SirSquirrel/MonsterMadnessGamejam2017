@@ -156,6 +156,7 @@ public class Tile : MonoBehaviour
     {
 
         Tile tile_to_swap = TileManager.tileManager.curTileSelected;
+        TileManager.tileManager.PlaySwapSound();
 
         Vector3 cur_position = transform.position;
         transform.position = TileManager.tileManager.curTileSelected.transform.position;
