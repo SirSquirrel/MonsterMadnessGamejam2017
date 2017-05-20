@@ -193,6 +193,7 @@ public class Person : MonoBehaviour
         {
             Debug.Log("Person has escaped the mansion!", this.gameObject);
             GameState.game_state.Defeat();
+            Destroy(gameObject);
         }
     }
 }
