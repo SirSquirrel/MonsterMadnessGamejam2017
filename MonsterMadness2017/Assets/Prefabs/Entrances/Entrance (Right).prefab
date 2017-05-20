@@ -532,7 +532,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1623221328595742}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: 2, z: 0}
+  m_LocalPosition: {x: -6, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4958420109119750}
@@ -860,7 +860,7 @@ Light:
   serializedVersion: 7
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0
+  m_Intensity: 0.5
   m_Range: 30
   m_SpotAngle: 29.9
   m_CookieSize: 10
@@ -924,9 +924,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b469a83aa1c62d4b9f4f2142da9f853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  people_to_spawn: 1
+  people_to_spawn: 2
   exit_side: 1
-  initial_spawn_delay: 0
+  initial_spawn_delay: 120
   spawn_delay: 20
   lightStep: 10
   soundPlayed: 0
