@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MonsterCollision : MonoBehaviour {
 
+    public AudioSource scream;
 	// Use this for initialization
 	void Start () {
 		
@@ -19,6 +20,8 @@ public class MonsterCollision : MonoBehaviour {
         if(collider.gameObject.tag.Equals("Person"))
         {
             Destroy(collider.gameObject);
+            scream.Play();
+            Instantiate(Resources.Load("blood"), transform.position, transform.rotation);
         }
     }
 }
