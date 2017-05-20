@@ -12,6 +12,7 @@ public class GameState : MonoBehaviour
     public List<Spawner> spawners;
 
     public bool game_over = false;
+    public bool defeated = false;
 
     public bool victory_counting_down = false;
     [HideInInspector]
@@ -33,6 +34,7 @@ public class GameState : MonoBehaviour
         game_state = this;
         canvas = GameObject.FindObjectOfType<Canvas>();
         timer = canvas.GetComponentInChildren<Text>(true);
+        Time.timeScale = 1f;
 
         if (Settings.Endless_Mode)
             timer.gameObject.SetActive(true);
@@ -64,57 +66,76 @@ public class GameState : MonoBehaviour
         GameObject go = Instantiate(Resources.Load("EndLevelText") as GameObject, canvas.transform);
         go.GetComponent<Text>().text = "All Mortals Trapped!";
 
-        StartCoroutine(VictoryCoroutine());
-    }
-    IEnumerator VictoryCoroutine()
-    {
-        yield return new WaitForSeconds(game_over_wait - 1.1f);
-        GameObject go = Instantiate(Resources.Load("FadeInBlack") as GameObject, canvas.transform);
-        go.transform.localScale = Vector3.one;
-        yield return new WaitForSeconds(1.1f);
-        UnityEngine.SceneManagement.SceneManager.LoadScene(next_level);
+        StartCoroutine(LoadSceneDelayed(game_over_wait, next_level, true));
     }
     public void Defeat()
     {
         if (game_over)
             return;
 
+        defeated = true;
         game_over = true;
         Debug.Log("Defeat!", this.gameObject);
 
         GameObject go = Instantiate(Resources.Load("EndLevelText") as GameObject, canvas.transform);
         go.transform.localScale = Vector3.one;
         go.GetComponent<Text>().text = "Mortal Escaped!";
-
-        StartCoroutine(DefeatCoroutine());
     }
-    IEnumerator DefeatCoroutine()
+
+
+    public IEnumerator LoadSceneDelayed(float delay, string scene, bool fade_out)
     {
-        yield return new WaitForSeconds(game_over_wait - 1.1f);
-        GameObject go = Instantiate(Resources.Load("FadeInBlack") as GameObject, canvas.transform);
-        go.transform.localScale = Vector3.one;
-        yield return new WaitForSeconds(1.1f);
-        UnityEngine.SceneManagement.SceneManager.LoadScene(defeat_level);
+        if (fade_out)
+        {
+            GameObject go = Instantiate(Resources.Load("FadeInBlack") as GameObject, canvas.transform);
+            go.transform.localScale = Vector3.one;
+        }
+
+        yield return new WaitForSeconds(delay);
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene(scene);
     }
 
 
-	void Update ()
+    void Update ()
     {
         elapsed_time += Time.deltaTime;
 
         if (victory_counting_down && !game_over)
         {
             victory_countdown_timer -= Time.deltaTime;
-            timer.text = "Time till victory: " + victory_countdown_timer;
+            timer.text = "Time till victory: " + (int) victory_countdown_timer;
             if (victory_countdown_timer <= 0)
             {
                 timer.gameObject.SetActive(false);
                 Victory();
             }
         }
-        else if (Settings.Endless_Mode)
+        else if (Settings.Endless_Mode && !game_over)
         {
-            timer.text = "" + elapsed_time;
+            timer.text = "" + (int) elapsed_time;
+        }
+
+        if (defeated)
+        {
+            if (Input.GetButtonDown("Submit") || Input.GetKeyDown(KeyCode.Y))
+            {
+                // Retry this level
+                StartCoroutine(LoadSceneDelayed(1.02f), UnityEngine.SceneManagement.SceneManager.GetActiveScene().name, true);
+                defeated = false;
+            }
+            else if (Input.GetButtonDown("Cancel") || Input.GetKey(KeyCode.N))
+            {
+                // Quit to menu
+                StartCoroutine(LoadSceneDelayed(1.02f, defeat_level, true));
+                defeated = false;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            // Restart level
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
         }
     }
 }
