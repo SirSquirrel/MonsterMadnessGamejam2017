@@ -16,8 +16,7 @@ public class GameState : MonoBehaviour
     public bool defeated = false;
 
     public bool victory_counting_down = false;
-    [HideInInspector]
-    public float victory_countdown_timer = 30f;
+    float victory_countdown_timer = 20f;
     Canvas canvas;
     [HideInInspector]
     public Text timer;

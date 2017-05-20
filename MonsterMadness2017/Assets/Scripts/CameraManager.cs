@@ -49,10 +49,8 @@ public class CameraManager : MonoBehaviour
         float y_constraint = Mathf.Max(Mathf.Abs(min_y), Mathf.Abs(max_y)) + 0.5f;
         Debug.Log(min_x + " " + min_y + ":" + max_x + " " + max_y);
         // Figure out if we should worry about width or height
-        float y_zoom = y_constraint / 2;
+        float y_zoom = y_constraint;
         float x_zoom = x_constraint / Screen.width * Screen.height;
-        //x_zoom /= 2;
-        y_zoom *= 2;
         //y_zoom = y_constraint + 0.5f;
 
         // Reference equations we must solve for
@@ -60,7 +58,6 @@ public class CameraManager : MonoBehaviour
         //float screenWidthInUnits = screenHeightInUnits * Screen.width / Screen.height; // basically height * screen aspect ratio
         // Add 1 because we have 0.5 extra space on each side
         float needed_zoom = Mathf.Max(x_zoom, y_zoom);
-        Debug.Log(x_zoom + ":" + y_zoom + ", " + needed_zoom);
 
         return needed_zoom;
     }
