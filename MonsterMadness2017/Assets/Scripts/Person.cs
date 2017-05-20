@@ -26,6 +26,10 @@ public class Person : MonoBehaviour
     {
         GameState.game_state.Victims.Add(this.gameObject);
         GetComponent<SpriteRenderer>().sprite = PersonSpriteList.personSpriteList.GetPersonSprite();
+        if(Settings.Current_Difficulty == Difficulty.Hard)
+        {
+            walking_speed = walking_speed * 1.5f;
+        }
 	}
 	
 
@@ -193,6 +197,7 @@ public class Person : MonoBehaviour
         {
             Debug.Log("Person has escaped the mansion!", this.gameObject);
             GameState.game_state.Defeat();
+            GameState.game_state.Victims.Remove(gameObject);
             Destroy(gameObject);
         }
     }
