@@ -12,6 +12,8 @@ public class Tile : MonoBehaviour
     public bool top_exit = false;
     public bool bottom_exit = false;
 
+    public int entrances = 0;
+
     public Tile left_neighbour;
     public Tile right_neighbour;
     public Tile top_neighbour;
@@ -34,6 +36,15 @@ public class Tile : MonoBehaviour
     void Start ()
     {
         Find_Neighbours();
+
+        if (left_exit)
+            entrances++;
+        if (right_exit)
+            entrances++;
+        if (top_exit)
+            entrances++;
+        if (bottom_exit)
+            entrances++;
 	}
 
     void OnMouseOver()
@@ -154,4 +165,7 @@ public class Tile : MonoBehaviour
         //todo when we figure out how people work
         return false;
     }
+
+
+
 }
