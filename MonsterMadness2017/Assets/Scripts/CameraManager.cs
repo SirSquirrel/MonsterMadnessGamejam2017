@@ -11,6 +11,8 @@ public class CameraManager : MonoBehaviour
 
     void Start ()
     {
+        target_pos = this.transform.position;
+
         CalculateZoomLevel();
     }
     public void SetZoomLevel(float size)
@@ -47,7 +49,7 @@ public class CameraManager : MonoBehaviour
         // Determine largest X/Y constraint
         float x_constraint = Mathf.Max(Mathf.Abs(min_x), Mathf.Abs(max_x)) + 0.5f;
         float y_constraint = Mathf.Max(Mathf.Abs(min_y), Mathf.Abs(max_y)) + 0.5f;
-        Debug.Log(min_x + " " + min_y + ":" + max_x + " " + max_y);
+
         // Figure out if we should worry about width or height
         float y_zoom = y_constraint;
         float x_zoom = x_constraint / Screen.width * Screen.height;
