@@ -38,9 +38,6 @@ public class Tile : MonoBehaviour
 
     public void Find_Neighbours()
     {
-        // Raycast nearby tiles to find neighbours
-        // Stick with units of 1
-
         // Raycast left
         left_neighbour = RaycastNeighbour(Vector2.left);
         // Raycast right
