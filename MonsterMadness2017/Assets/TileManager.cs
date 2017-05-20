@@ -26,5 +26,18 @@ public class TileManager : MonoBehaviour {
                 Destroy(highlight);
             }
         }
+
+        for (int i = 0; i < GameState.game_state.Victims.Count; i++)
+        {
+            if (GameState.game_state.Victims[i].GetComponent<Person>().cur_tile == curTileSelected)
+            {
+                TileManager.tileManager.hasTileSelected = false;
+                TileManager.tileManager.curTileSelected = null;
+                if (highlight != null)
+                {
+                    Destroy(highlight);
+                }
+            }
+        }
     }
 }

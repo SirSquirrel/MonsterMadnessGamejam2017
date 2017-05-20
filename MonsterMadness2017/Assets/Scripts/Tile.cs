@@ -51,28 +51,43 @@ public class Tile : MonoBehaviour
 
     void OnMouseOver()
     {
-        if (!TileManager.tileManager.hasTileSelected && temporary_highlight == null&& can_be_swapped)
+        bool man_on = false;
+        for (int i = 0; i < GameState.game_state.Victims.Count; i++)
         {
-
-            temporary_highlight = (GameObject)Instantiate(Resources.Load("TemporaryHighlight"), transform.position, transform.rotation);
+            if(GameState.game_state.Victims[i].GetComponent<Person>().cur_tile == this)
+            {
+                man_on = true;
+                if (temporary_highlight != null)
+                {
+                    Destroy(temporary_highlight);
+                }
+            }
         }
 
-        if (can_be_swapped)
+        if (!man_on)
         {
-            if (Input.GetMouseButtonDown(0) && !TileManager.tileManager.hasTileSelected && can_be_swapped)
+            if (temporary_highlight == null && can_be_swapped)
             {
-                Debug.Log("Selected");
-                TileManager.tileManager.hasTileSelected = true;
-                TileManager.tileManager.curTileSelected = this;
-                Destroy(temporary_highlight);
-                TileManager.tileManager.highlight = (GameObject)Instantiate(Resources.Load("Highlight"), transform.position, transform.rotation);
+
+                temporary_highlight = (GameObject)Instantiate(Resources.Load("TemporaryHighlight"), transform.position, transform.rotation);
             }
-            else if (Input.GetMouseButtonDown(0) && TileManager.tileManager.hasTileSelected && can_be_swapped)
+
+            if (can_be_swapped)
             {
-                Swap();
-                TileManager.tileManager.hasTileSelected = false;
-                TileManager.tileManager.curTileSelected = null;
-                Destroy(TileManager.tileManager.highlight);
+                if (Input.GetMouseButtonDown(0) && !TileManager.tileManager.hasTileSelected && can_be_swapped)
+                {
+                    TileManager.tileManager.hasTileSelected = true;
+                    TileManager.tileManager.curTileSelected = this;
+                    Destroy(temporary_highlight);
+                    TileManager.tileManager.highlight = (GameObject)Instantiate(Resources.Load("Highlight"), transform.position, transform.rotation);
+                }
+                else if (Input.GetMouseButtonDown(0) && TileManager.tileManager.hasTileSelected && can_be_swapped)
+                {
+                    Swap();
+                    TileManager.tileManager.hasTileSelected = false;
+                    TileManager.tileManager.curTileSelected = null;
+                    Destroy(TileManager.tileManager.highlight);
+                }
             }
         }
     }
@@ -103,7 +118,8 @@ public class Tile : MonoBehaviour
     }
     public Tile RaycastNeighbour(Vector2 direction)
     {
-        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, 1f);
+
+        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, direction, 1f,LayerMask.GetMask("Tile"));
 
         if (hit.transform != null && hit.transform.gameObject.GetComponent<Tile>() != null)
             return hit.transform.gameObject.GetComponent<Tile>();
