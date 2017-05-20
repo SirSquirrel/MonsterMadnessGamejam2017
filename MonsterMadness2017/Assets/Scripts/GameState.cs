@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -66,6 +67,9 @@ public class GameState : MonoBehaviour
 
         GameObject go = Instantiate(Resources.Load("EndLevelText") as GameObject, canvas.transform);
         go.GetComponent<Text>().text = "All Mortals Trapped!";
+
+        PlayerPrefs.SetInt(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name, Convert.ToInt32(true));
+        PlayerPrefs.Save();
 
         StartCoroutine(LoadSceneDelayed(game_over_wait, next_level, true));
     }

@@ -13,11 +13,14 @@ public class CameraManager : MonoBehaviour
     {
         CalculateZoomLevel();
     }
-    public void CalculateZoomLevel()
+    public void SetZoomLevel(float size)
     {
         prev_zoom = Camera.main.orthographicSize;
         time_zoom_changed = Time.time;
-
+        target_zoom = size;
+    }
+    public void CalculateZoomLevel()
+    {
         float max_width = 0;
         float max_height = 0;
         float min_width = 0;
@@ -37,7 +40,7 @@ public class CameraManager : MonoBehaviour
                 min_height = go.transform.position.x;
         }
 
-        target_zoom = GetOrphographicZoomToFit(min_width, min_height, max_width, max_height);
+        SetZoomLevel(GetOrphographicZoomToFit(min_width, min_height, max_width, max_height));
     }
     public float GetOrphographicZoomToFit(float min_x, float min_y, float max_x, float max_y)
     {
@@ -67,5 +70,11 @@ public class CameraManager : MonoBehaviour
             Camera.main.orthographicSize =  Mathf.Lerp(prev_zoom, target_zoom, Time.time - time_zoom_changed);
         }
         // Panning
+        if (target_pos != null && (Vector2) Camera.main.transform.position != target_pos)
+        {
+            Vector3 v = Vector2.Lerp(Camera.main.transform.position, target_pos, 1.0f * Time.deltaTime);
+            v.z = -10f;
+            Camera.main.transform.position = v;
+        }
 	}
 }
