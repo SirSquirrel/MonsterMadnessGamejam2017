@@ -116,8 +116,5 @@ public class GameState : MonoBehaviour
         {
             timer.text = "" + elapsed_time;
         }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-            UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
 }

@@ -142,7 +142,9 @@ public class AudioManager : MonoBehaviour
     public void Voice_Volume_Changed(float new_volume)
     {
         voice_volume = new_volume;
-        voice_audio_source.volume = new_volume;
+
+        if (voice_audio_source)
+            voice_audio_source.volume = new_volume;
 
         // Change the talking beeps volume, as they count as voice volume
         foreach (AudioSource aud in talking_beeps_list)
@@ -155,7 +157,8 @@ public class AudioManager : MonoBehaviour
     public void Music_Volume_Changed(float new_volume)
     {
         music_volume = new_volume;
-        background_music_audio_source.volume = new_volume;
+        if (background_music_audio_source)
+            background_music_audio_source.volume = new_volume;
 
         SavePlayerPreference("MusicVolume", new_volume);
     }
