@@ -13,9 +13,12 @@ public class footMove : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (opposite)
-            transform.position = transform.position + transform.right * Mathf.Sin(Time.time * animationSpeed) * speed * animationSpeed;
-        else
-            transform.position = transform.position - transform.right * Mathf.Sin(Time.time * animationSpeed) * speed * animationSpeed;
+        if (Time.timeScale > 0)
+        {
+            if (opposite)
+                transform.position = transform.position + transform.right * Mathf.Sin(Time.time * animationSpeed) * speed * animationSpeed;
+            else
+                transform.position = transform.position - transform.right * Mathf.Sin(Time.time * animationSpeed) * speed * animationSpeed;
+        }
     }
 }
