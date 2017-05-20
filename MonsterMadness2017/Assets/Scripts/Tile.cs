@@ -134,6 +134,7 @@ public class Tile : MonoBehaviour
 
         Vector3 cur_position = transform.position;
         transform.position = TileManager.tileManager.curTileSelected.transform.position;
+        tile_to_swap.transform.position = cur_position;
         Find_Neighbours();
 
         //have all neighbours re-evaluate as well
@@ -149,7 +150,7 @@ public class Tile : MonoBehaviour
         if (bottom_neighbour != null)
             bottom_neighbour.GetComponent<Tile>().Find_Neighbours();
 
-        tile_to_swap.transform.position = cur_position;
+        
         tile_to_swap.Find_Neighbours();
 
         if (tile_to_swap.left_neighbour != null)
