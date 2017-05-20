@@ -7,9 +7,9 @@ public class HighlightCircle : MonoBehaviour
     SpriteRenderer s;
     bool entering_in = true;
 
-    float initial_scale = 100f;
+    float initial_scale = 5f;
     float counter = 0;
-    float rate_of_change = 1f;
+    float rate_of_change = 0.5f;
 
     void Start ()
     {

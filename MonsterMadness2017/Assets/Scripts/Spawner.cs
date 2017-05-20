@@ -35,11 +35,14 @@ public class Spawner : MonoBehaviour
     void Update ()
     {
         cur_spawn_delay -= Time.deltaTime;
-        if(cur_spawn_delay <=5 && !soundPlayed)
+        if(cur_spawn_delay <= 5 && !soundPlayed)
         {
             sounds[0].Play();
             soundPlayed = true;
             lightTriggered = true;
+
+            GameObject go = Instantiate(Resources.Load("Circle") as GameObject);
+            go.transform.position = this.transform.position;
         }
 
         if (lightTriggered && this_light.intensity <= 2)
