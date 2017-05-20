@@ -24,10 +24,5 @@ public class GridSnap : MonoBehaviour
             transform.position = new Vector3(x, y, z);
         }
     }
-
-    void OnDrawGizmos()
-    {
-        UnityEditor.Handles.Label(this.transform.position + offset, "" + (Vector2) this.transform.position);
-    }
     #endif
 }

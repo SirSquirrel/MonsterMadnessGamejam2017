@@ -319,7 +319,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4199502786674438, guid: 020923ab48787604c9ea24358220c309, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4199502786674438, guid: 020923ab48787604c9ea24358220c309, type: 2}
       propertyPath: m_LocalPosition.z
@@ -348,6 +348,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 020923ab48787604c9ea24358220c309, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &1273177165 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4203011613496286, guid: b43700972c8c62943afa72651fa3cdef,
+    type: 2}
+  m_PrefabInternal: {fileID: 1287735796}
 --- !u!1001 &1287735796
 Prefab:
   m_ObjectHideFlags: 0
@@ -479,3 +484,46 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0fd98f446d6efc5488fe5d7c2797dde0, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1936323725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1936323726}
+  - component: {fileID: 1936323727}
+  m_Layer: 10
+  m_Name: ExitTrigger
+  m_TagString: Exit
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1936323726
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1936323725}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1273177165}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1936323727
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1936323725}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 0.1, y: 0.1}

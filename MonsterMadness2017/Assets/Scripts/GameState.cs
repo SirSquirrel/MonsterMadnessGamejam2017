@@ -6,6 +6,8 @@ public class GameState : MonoBehaviour
 {
     public static GameState game_state;
 
+    public List<GameObject> Victims;
+
 
     void Awake ()
     {

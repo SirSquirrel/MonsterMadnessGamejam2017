@@ -27,9 +27,6 @@ public class Tile : MonoBehaviour
 
     public int exits = 0;
 
-    public bool man_on_tile = false;
-    public int man_on_tile_count = 0;
-
     //whether the tile is currently being selected to swap
     public bool selected = false;
 
@@ -54,7 +51,7 @@ public class Tile : MonoBehaviour
 
     void OnMouseOver()
     {
-        if (!TileManager.tileManager.hasTileSelected && temporary_highlight == null && !man_on_tile && can_be_swapped)
+        if (!TileManager.tileManager.hasTileSelected && temporary_highlight == null&& can_be_swapped)
         {
 
             temporary_highlight = (GameObject)Instantiate(Resources.Load("TemporaryHighlight"), transform.position, transform.rotation);
@@ -62,7 +59,7 @@ public class Tile : MonoBehaviour
 
         if (can_be_swapped)
         {
-            if (Input.GetMouseButtonDown(0) && !TileManager.tileManager.hasTileSelected && !man_on_tile && can_be_swapped)
+            if (Input.GetMouseButtonDown(0) && !TileManager.tileManager.hasTileSelected && can_be_swapped)
             {
                 Debug.Log("Selected");
                 TileManager.tileManager.hasTileSelected = true;
@@ -114,34 +111,6 @@ public class Tile : MonoBehaviour
             return null;
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if(other.gameObject.tag == "Person")
-        {
-            man_on_tile = true;
-            man_on_tile_count = man_on_tile_count + 1;
-            if(TileManager.tileManager.curTileSelected == this)
-            {
-                TileManager.tileManager.hasTileSelected = false;
-                TileManager.tileManager.curTileSelected = null;
-                Destroy(TileManager.tileManager.highlight);
-            }
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Person")
-        {
-            man_on_tile_count = man_on_tile_count - 1;
-            if(man_on_tile_count == 0)
-            {
-                man_on_tile = false;
-            }
-        }
-    }
-
-
     public void CalculateExits()
     {
         exits = 0;
@@ -169,6 +138,7 @@ public class Tile : MonoBehaviour
 
     public void Swap()
     {
+
         Tile tile_to_swap = TileManager.tileManager.curTileSelected;
 
         Vector3 cur_position = transform.position;
