@@ -19,6 +19,8 @@ public class Person : MonoBehaviour
 
     float time_alive = 0f;
 
+    public float rotationSpeed = 0.1f;
+
 
     void Start ()
     {
@@ -28,6 +30,8 @@ public class Person : MonoBehaviour
 
 	void Update ()
     {
+        Rotate_To_Walking_Direction();
+
         time_alive += Time.deltaTime;
 
         if (cur_tile == null)
@@ -94,6 +98,15 @@ public class Person : MonoBehaviour
             progress_towards_destination -= 1;
         }
 	}
+
+    public void Rotate_To_Walking_Direction()
+    {
+        float angle = Mathf.Atan2(walking_direction.y, walking_direction.x) * Mathf.Rad2Deg;
+        Quaternion m_desiredDirection = Quaternion.AngleAxis(angle, Vector3.forward);
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, m_desiredDirection,
+                                              Time.deltaTime * rotationSpeed);
+    }
 
 
     public Vector2 Get_Random_Direction()

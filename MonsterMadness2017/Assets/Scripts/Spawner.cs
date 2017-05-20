@@ -11,16 +11,19 @@ public class Spawner : MonoBehaviour
     public float initial_spawn_delay = 60f;
     public float spawn_delay = 20f;
     public bool soundPlayed = false;
+    public bool animPlayed = false;
 
     public AudioSource[] sounds;
     Tile this_tile;
-
+    Animator this_anim;
 
     void Start ()
     {
         cur_spawn_delay = initial_spawn_delay;
         this_tile = this.GetComponent<Tile>();
+        this_anim = this.GetComponentInChildren<Animator>();
         GameState.game_state.spawners.Add(this);
+
 	}
 
 
@@ -33,9 +36,16 @@ public class Spawner : MonoBehaviour
             soundPlayed = true;
         }
 
+        if (cur_spawn_delay <= 1 && !animPlayed)
+        {
+            this_anim.SetTrigger("CycleDoor");
+            animPlayed = true;
+        }
+
         if (cur_spawn_delay <= 0)
         {
             soundPlayed = false;
+            animPlayed = false;
             cur_spawn_delay = spawn_delay;
             Spawn();
 
