@@ -17,6 +17,7 @@ public class Spawner : MonoBehaviour
     {
         cur_spawn_delay = initial_spawn_delay;
         this_tile = this.GetComponent<Tile>();
+        GameState.game_state.spawners.Add(this);
 	}
 
 
@@ -28,9 +29,19 @@ public class Spawner : MonoBehaviour
         {
             cur_spawn_delay = spawn_delay;
             Spawn();
-            people_to_spawn--;
-            if (people_to_spawn <= 0)
-                Destroy(this);
+
+            // Spawners only decrease numbers if not on endless mode
+            if (!GameState.game_state.endless_mode)
+            {
+                people_to_spawn--;
+
+                if (people_to_spawn <= 0)
+                {
+                    GameState.game_state.spawners.Remove(this);
+                    GameState.game_state.CheckVictory();
+                    Destroy(this);
+                }
+            }
         }
     }
 
