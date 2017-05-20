@@ -44,7 +44,6 @@ public class Person : MonoBehaviour
         {
             // Get a new destination
             // Either at the center of a tile
-            Debug.Log(this.transform.position.x % 1f);
             if (Mathf.Abs(this.transform.position.x % 1f) == 0f && Mathf.Abs(this.transform.position.y % 1f) == 0f)
             {
                 // Determine which direction to go (from which is allowed)
@@ -64,7 +63,6 @@ public class Person : MonoBehaviour
                     while (new_dir == -walking_direction)
                     {
                         new_dir = Get_Random_Direction();
-                        Debug.Log(new_dir + " : " + -walking_direction);
                     }
                     prev_destination = destination;
                     walking_direction = new_dir;
