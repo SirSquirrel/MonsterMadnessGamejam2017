@@ -104,8 +104,8 @@ public class Tile : MonoBehaviour
 
     void OnMouseExit()
     {
-        Destroy(temporary_highlight);
-        Destroy(x_outline);
+            Destroy(temporary_highlight);
+            Destroy(x_outline);
     }
 
     void Update()

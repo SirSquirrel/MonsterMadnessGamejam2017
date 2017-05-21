@@ -36,9 +36,22 @@ public class Person : MonoBehaviour
             walking_speed = walking_speed * 1.5f;
         }
 	}
-	
 
-	void Update ()
+    void OnMouseOver()
+    {
+        if (cur_tile.x_outline==null)
+        {
+            cur_tile.x_outline = (GameObject)Instantiate(Resources.Load("XOutline"), cur_tile.transform.position, cur_tile.transform.rotation);
+        }
+    }
+
+    void OnMouseExit()
+    {
+        Destroy(cur_tile.x_outline);
+    }
+
+
+    void Update ()
     {
         if(fading)
         {
@@ -95,6 +108,7 @@ public class Person : MonoBehaviour
                 // Can we keep walking?
                 if (Can_Walk_Onto_New_Tile())
                 {
+                    Destroy(cur_tile.x_outline);
                     cur_tile = touched_tile;
                     // Set prev destination
                     prev_destination = destination;

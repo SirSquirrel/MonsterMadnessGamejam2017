@@ -32,11 +32,13 @@ public class TileManager : MonoBehaviour {
         {
             if (GameState.game_state.Victims[i].GetComponent<Person>().cur_tile == curTileSelected)
             {
+                Instantiate(Resources.Load("XOutlineDiesAtTime"), TileManager.tileManager.curTileSelected.transform.position, TileManager.tileManager.curTileSelected.transform.rotation);
                 TileManager.tileManager.hasTileSelected = false;
                 TileManager.tileManager.curTileSelected = null;
                 if (highlight != null)
                 {
                     Destroy(highlight);
+                   
                 }
             }
         }
