@@ -868,6 +868,7 @@ GameObject:
   - component: {fileID: 577674469}
   - component: {fileID: 577674468}
   - component: {fileID: 577674467}
+  - component: {fileID: 577674470}
   m_Layer: 5
   m_Name: PeopleHelp
   m_TagString: Untagged
@@ -946,6 +947,19 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 577674465}
+--- !u!114 &577674470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 577674465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d095d4d07b5728846bcb1196d439a68a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  die_time: 8
+  die_timer: 0
 --- !u!1001 &593660264
 Prefab:
   m_ObjectHideFlags: 0

@@ -513,6 +513,7 @@ GameObject:
   - component: {fileID: 1145573438}
   - component: {fileID: 1145573437}
   - component: {fileID: 1145573436}
+  - component: {fileID: 1145573439}
   m_Layer: 5
   m_Name: PeopleHelp (1)
   m_TagString: Untagged
@@ -591,6 +592,19 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1145573434}
+--- !u!114 &1145573439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1145573434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d095d4d07b5728846bcb1196d439a68a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  die_time: 8
+  die_timer: 0
 --- !u!1001 &1149661036
 Prefab:
   m_ObjectHideFlags: 0
@@ -654,6 +668,7 @@ GameObject:
   - component: {fileID: 1166555662}
   - component: {fileID: 1166555661}
   - component: {fileID: 1166555660}
+  - component: {fileID: 1166555663}
   m_Layer: 5
   m_Name: PeopleHelp
   m_TagString: Untagged
@@ -732,6 +747,19 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1166555658}
+--- !u!114 &1166555663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1166555658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d095d4d07b5728846bcb1196d439a68a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  die_time: 8
+  die_timer: 0
 --- !u!1001 &1326898372
 Prefab:
   m_ObjectHideFlags: 0
