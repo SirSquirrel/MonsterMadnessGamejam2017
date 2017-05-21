@@ -215,7 +215,7 @@ public class Person : MonoBehaviour
         }
 
         //the following code block being reached means the game has ended
-        else if (collision.tag == "Exit" && time_alive > 1f)
+        else if (collision.tag == "Exit" && time_alive > 1f && !GameState.game_state.game_over)
         {
             Debug.Log("Person has escaped the mansion!", this.gameObject);
             GameState.game_state.Defeat();
@@ -232,7 +232,6 @@ public class Person : MonoBehaviour
             {
                 Destroy(children[i].gameObject);
             }
-
             ExitStorer Exit = collision.GetComponent<ExitStorer>();
             Exit.Sounds[0].Play();
             Exit.Anim.SetTrigger("CycleDoor");
