@@ -249,6 +249,9 @@ MonoBehaviour:
   progress_towards_destination: 0
   cur_tile: {fileID: 0}
   rotationSpeed: 5
+  fading: 0
+  opacity: 1
+  fadeSpeed: 0.005
 --- !u!212 &212095705864649700
 SpriteRenderer:
   m_ObjectHideFlags: 1
