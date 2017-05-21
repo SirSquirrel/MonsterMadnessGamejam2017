@@ -15,7 +15,7 @@ public class Person : MonoBehaviour
     public float progress_towards_destination = 0;
 
     public Tile cur_tile;
-    Tile touched_tile;
+    public Tile touched_tile;
 
     float time_alive = 0f;
 
@@ -237,6 +237,8 @@ public class Person : MonoBehaviour
             Exit.Sounds[0].Play();
             Exit.Anim.SetTrigger("CycleDoor");
             Exit.Sounds[1].Play(1);
+
+            GameState.game_state.gameObject.GetComponent<AudioSource>().Stop();
 
 
         }
