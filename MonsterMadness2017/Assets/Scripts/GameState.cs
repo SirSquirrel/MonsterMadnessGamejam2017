@@ -43,6 +43,8 @@ public class GameState : MonoBehaviour
 
         GameObject go = Instantiate(Resources.Load("FadeOutBlack") as GameObject, canvas.transform);
         go.transform.localScale = Vector3.one;
+
+        Victory();
     }
 
 
@@ -71,18 +73,14 @@ public class GameState : MonoBehaviour
         PlayerPrefs.SetInt(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name, Convert.ToInt32(true));
         PlayerPrefs.Save();
 
-        int next_level_id = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex + 1;
+        int next_level_id = int.Parse(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name) + 1;
 
-        // For some reason getting a scene by build number doesn't work. Just be sure to keep level names numbers, with no gaps
-        // -1 for Main Menu and splash screen
-        if (next_level_id <= SceneManager.sceneCountInBuildSettings - 1)
+        try
         {
-            // Scene is valid, go to it
             Debug.Log("Set next scene " + next_level_id);
             StartCoroutine(LoadSceneDelayed(game_over_wait, next_level_id + "", true));
-            return;
         }
-        else
+        catch (Exception e)
         {
             Debug.LogError("Next scene is null or invalid, go to main menu " + next_level_id, this.gameObject);
             StartCoroutine(LoadSceneDelayed(game_over_wait, "MainMenu", true));
@@ -124,7 +122,27 @@ public class GameState : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene(scene);
+        try
+        {
+            Scene scene_obj = SceneManager.GetSceneByName(scene);
+            if (scene_obj == null || scene_obj.IsValid())
+                Debug.LogError("hi");
+
+            UnityEngine.SceneManagement.SceneManager.LoadScene(scene);
+
+
+        }
+        // This doesn't ever get executed, as if it's an invalid level it errors out somewhere else
+        catch (Exception e)
+        {
+            Debug.LogError("Couldn't load scene," + scene + " go to main menu instead", this.gameObject);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(defeat_level);
+        }
+
+        // If the level is valid, this code won't be executed
+        // If the level is invalid, this scene sticks around, and this code gets executed
+        yield return new WaitForSeconds(0.3f);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(defeat_level);
     }
 
 
