@@ -54,7 +54,7 @@ public class Tile : MonoBehaviour
         bool man_on = false;
         for (int i = 0; i < GameState.game_state.Victims.Count; i++)
         {
-            if(GameState.game_state.Victims[i].GetComponent<Person>().cur_tile == this || GameState.game_state.Victims[i].GetComponent<Person>().touched_tile == this)
+            if(GameState.game_state.Victims[i].GetComponent<Person>().cur_tile == this)
             {
                 man_on = true;
                 if (temporary_highlight != null)
