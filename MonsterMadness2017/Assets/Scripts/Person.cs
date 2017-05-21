@@ -21,6 +21,11 @@ public class Person : MonoBehaviour
 
     public float rotationSpeed = 0.1f;
 
+    //variables for fading
+    public bool fading = false;
+    public float opacity = 1f;
+    public float fadeSpeed = 0.01f;
+
 
     void Start ()
     {
@@ -35,6 +40,12 @@ public class Person : MonoBehaviour
 
 	void Update ()
     {
+        if(fading)
+        {
+            Fade();
+            return;
+        }
+
         Rotate_To_Walking_Direction();
 
         time_alive += Time.deltaTime;
@@ -185,6 +196,15 @@ public class Person : MonoBehaviour
         return false;
     }
 
+    public void Fade()
+    {
+        if (opacity > 0)
+        {
+            opacity = opacity - fadeSpeed;
+        }
+        GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f,opacity) ;
+    }
+
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -193,6 +213,8 @@ public class Person : MonoBehaviour
         {
             touched_tile = collision.gameObject.GetComponent<Tile>();
         }
+
+        //the following code block being reached means the game has ended
         else if (collision.tag == "Exit" && time_alive > 1f)
         {
             Debug.Log("Person has escaped the mansion!", this.gameObject);
@@ -200,7 +222,23 @@ public class Person : MonoBehaviour
             Camera.main.GetComponent<CameraManager>().target_pos = this.transform.position;
             Camera.main.GetComponent<CameraManager>().SetZoomLevel(1.0f);
             GameState.game_state.Victims.Remove(gameObject);
-            Destroy(this);
+            fading = true;
+            var children = new List<Transform>();
+            for(int i = 0; i < transform.childCount;i++)
+            {
+                children.Add(transform.GetChild(i));
+            }
+            for (int i = 0; i < children.Count; i++)
+            {
+                Destroy(children[i].gameObject);
+            }
+
+            Spawner Exit = collision.GetComponent<Spawner>();
+            Exit.sounds[1].Play();
+            Exit.this_anim.SetTrigger("CycleDoor");
+
+
+
         }
     }
 }

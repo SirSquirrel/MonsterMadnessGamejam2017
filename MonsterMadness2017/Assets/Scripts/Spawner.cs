@@ -18,7 +18,7 @@ public class Spawner : MonoBehaviour
 
     public AudioSource[] sounds;
     Tile this_tile;
-    Animator this_anim;
+    public Animator this_anim;
     Light this_light;
 
     void Start ()
