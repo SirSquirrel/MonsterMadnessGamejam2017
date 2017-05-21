@@ -61,7 +61,8 @@ public class Spawner : MonoBehaviour
             soundPlayed = false;
             animPlayed = false;
             lightTriggered = false;
-            this_light.intensity = 0.5f;
+            this_light.intensity = 1f;
+            this_light.spotAngle = 40;
             cur_spawn_delay = spawn_delay;
             Spawn();
 
