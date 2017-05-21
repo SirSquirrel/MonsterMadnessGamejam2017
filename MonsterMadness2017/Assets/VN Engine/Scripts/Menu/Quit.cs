@@ -23,6 +23,13 @@ public class Quit : MonoBehaviour
     }
 
 
+    public void ClearPrefs()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+    }
+
+
     public void SetNewDifficulty(int dif)
     {
         switch (dif)
