@@ -31,6 +31,7 @@ public class Tile : MonoBehaviour
     public bool selected = false;
 
     public GameObject temporary_highlight;
+    public GameObject x_outline;
 
     //whether the tile can be swapped, set to false for entrances and exits
     public bool can_be_swapped = true;
@@ -64,6 +65,11 @@ public class Tile : MonoBehaviour
             }
         }
 
+        if((man_on || !can_be_swapped) && x_outline == null)
+        {
+            x_outline = (GameObject)Instantiate(Resources.Load("XOutline"), transform.position, transform.rotation);
+        }
+
         if (!man_on)
         {
             if (temporary_highlight == null && can_be_swapped)
@@ -74,14 +80,18 @@ public class Tile : MonoBehaviour
 
             if (can_be_swapped)
             {
-                if (Input.GetMouseButtonDown(0) && !TileManager.tileManager.hasTileSelected && can_be_swapped)
+                if (x_outline != null)
+                {
+                    Destroy(x_outline);
+                }
+                if (Input.GetMouseButtonDown(0) && !TileManager.tileManager.hasTileSelected)
                 {
                     TileManager.tileManager.hasTileSelected = true;
                     TileManager.tileManager.curTileSelected = this;
                     Destroy(temporary_highlight);
                     TileManager.tileManager.highlight = (GameObject)Instantiate(Resources.Load("Highlight"), transform.position, transform.rotation);
                 }
-                else if (Input.GetMouseButtonDown(0) && TileManager.tileManager.hasTileSelected && can_be_swapped)
+                else if (Input.GetMouseButtonDown(0) && TileManager.tileManager.hasTileSelected)
                 {
                     Swap();
                     TileManager.tileManager.hasTileSelected = false;
@@ -95,6 +105,7 @@ public class Tile : MonoBehaviour
     void OnMouseExit()
     {
         Destroy(temporary_highlight);
+        Destroy(x_outline);
     }
 
     void Update()
