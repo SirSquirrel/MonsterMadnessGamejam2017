@@ -233,10 +233,10 @@ public class Person : MonoBehaviour
                 Destroy(children[i].gameObject);
             }
 
-            Spawner Exit = collision.GetComponent<Spawner>();
-            Exit.sounds[1].Play();
-            Exit.this_anim.SetTrigger("CycleDoor");
-
+            ExitStorer Exit = collision.GetComponent<ExitStorer>();
+            Exit.Sounds[0].Play();
+            Exit.Anim.SetTrigger("CycleDoor");
+            Exit.Sounds[1].Play(1);
 
 
         }
