@@ -43,8 +43,6 @@ public class GameState : MonoBehaviour
 
         GameObject go = Instantiate(Resources.Load("FadeOutBlack") as GameObject, canvas.transform);
         go.transform.localScale = Vector3.one;
-
-        Victory();
     }
 
 
