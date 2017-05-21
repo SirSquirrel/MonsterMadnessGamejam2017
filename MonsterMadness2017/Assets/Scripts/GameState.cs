@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -54,7 +55,7 @@ public class GameState : MonoBehaviour
             timer.gameObject.SetActive(true);
         }
     }
-	
+
 
     public void Victory()
     {
@@ -70,7 +71,23 @@ public class GameState : MonoBehaviour
         PlayerPrefs.SetInt(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name, Convert.ToInt32(true));
         PlayerPrefs.Save();
 
-        StartCoroutine(LoadSceneDelayed(game_over_wait, next_level, true));
+        int next_level_id = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex + 1;
+
+        // For some reason getting a scene by build number doesn't work. Just be sure to keep level names numbers, with no gaps
+        // -1 for Main Menu and splash screen
+        if (next_level_id <= SceneManager.sceneCountInBuildSettings - 1)
+        {
+            // Scene is valid, go to it
+            Debug.Log("Set next scene " + next_level_id);
+            StartCoroutine(LoadSceneDelayed(game_over_wait, next_level_id + "", true));
+            return;
+        }
+        else
+        {
+            Debug.LogError("Next scene is null or invalid, go to main menu " + next_level_id, this.gameObject);
+            StartCoroutine(LoadSceneDelayed(game_over_wait, "MainMenu", true));
+            return;
+        }
     }
     public void Defeat()
     {
