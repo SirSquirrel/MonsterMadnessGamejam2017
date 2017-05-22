@@ -7,7 +7,11 @@ public class PlayVideo : MonoBehaviour
 
 	void Start () 
 	{
-        ((MovieTexture)GetComponent<Renderer>().material.mainTexture).Play();
+        #if UNITY_WEBGL
+            Debug.Log("WebGL, not playing video");
+        #else
+            ((MovieTexture)GetComponent<Renderer>().material.mainTexture).Play();
+        #endif
     }
 	
 }

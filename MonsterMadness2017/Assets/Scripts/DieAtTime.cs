@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //this script kills the object it is attached to when die_time seconds have elapsed
-public class DieAtTime : MonoBehaviour {
-    public float die_time = 1;
+public class DieAtTime : MonoBehaviour
+{
+    public float die_after_x_seconds = 1;
+    [HideInInspector]
     public float die_timer;
-	// Use this for initialization
-	void Start () {
-        die_timer = die_time + Time.time;
+
+
+    void Start ()
+    {
+        die_timer = die_after_x_seconds + Time.time;
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+
+    void Update ()
+    {
 		if(die_timer <= Time.time)
         {
             Destroy(gameObject);

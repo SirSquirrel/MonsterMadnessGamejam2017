@@ -2,23 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class footMove : MonoBehaviour {
-    public float speed = 0.1f;
-    public float animationSpeed = 3f;
+public class footMove : MonoBehaviour
+{
+    float speed_of_anim = 6f;
+    float length_of_step = 0.1f;
     public bool opposite = false;
-	// Use this for initialization
-	void Start () {
-		
+
+    Person p;
+
+    void Start ()
+    {
+        p = this.GetComponentInParent<Person>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+
+    void FixedUpdate ()
+    {
         if (Time.timeScale > 0)
         {
+            Vector3 pos = this.transform.localPosition;
             if (opposite)
-                transform.position = transform.position + transform.right * Mathf.Sin(Time.time * animationSpeed) * speed * animationSpeed;
+                pos.x = Mathf.Sin(Time.time * speed_of_anim) * length_of_step;
             else
-                transform.position = transform.position - transform.right * Mathf.Sin(Time.time * animationSpeed) * speed * animationSpeed;
+                pos.x = -Mathf.Sin(Time.time * speed_of_anim) * length_of_step;
+            this.transform.localPosition = pos;
         }
     }
 }

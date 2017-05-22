@@ -27,13 +27,17 @@ public class Spawner : MonoBehaviour
         this_tile = this.GetComponent<Tile>();
         this_anim = this.GetComponentInChildren<Animator>();
         this_light = this.GetComponentInChildren<Light>();
-        GameState.game_state.spawners.Add(this);
 
+        if (people_to_spawn > 0)
+            GameState.game_state.spawners.Add(this);
 	}
 
 
     void Update ()
     {
+        if (people_to_spawn <= 0)
+            return;
+
         cur_spawn_delay -= Time.deltaTime;
         if(cur_spawn_delay <= 5 && !soundPlayed)
         {

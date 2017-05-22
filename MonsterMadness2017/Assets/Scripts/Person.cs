@@ -92,11 +92,10 @@ public class Person : MonoBehaviour
                 {
                     // There is more than one entrance, go the direction we weren't going before
                     Vector2 new_dir = -walking_direction;
-                    // Keep picking until we get a new direction
-                    while (new_dir == -walking_direction)
-                    {
-                        new_dir = Get_Random_Direction();
-                    }
+
+                    // Pick a new direction if possible. If not possible, just turns around
+                    new_dir = Get_Random_Direction(-walking_direction);
+
                     prev_destination = destination;
                     walking_direction = new_dir;
                     destination = destination + new_dir / 2f;
@@ -142,34 +141,83 @@ public class Person : MonoBehaviour
     public Vector2 Get_Random_Direction()
     {
         Vector2 new_dir = Vector2.zero;
+        List<Vector2> possible_directions = new List<Vector2>();
 
-        // Keep picking until we get a new direction
-        while (new_dir == Vector2.zero)
+        if (cur_tile.exits > 0)
         {
-            int random = Random.Range(0, 4);
-            switch (random)
-            {
-                case 0:
-                    // Left
-                    if (cur_tile.left_exit)
-                        new_dir = Vector2.left;
-                    break;
-                case 1:
-                    // Right
-                    if (cur_tile.right_exit)
-                        new_dir = Vector2.right;
-                    break;
-                case 2:
-                    // Top
-                    if (cur_tile.top_exit)
-                        new_dir = Vector2.up;
-                    break;
-                case 3:
-                    // Bottom
-                    if (cur_tile.bottom_exit)
-                        new_dir = Vector2.down;
-                    break;
-            }
+            if (cur_tile.can_go_left)
+                possible_directions.Add(Vector2.left);
+            if (cur_tile.can_go_right)
+                possible_directions.Add(Vector2.right);
+            if (cur_tile.can_go_top)
+                possible_directions.Add(Vector2.up);
+            if (cur_tile.can_go_bottom)
+                possible_directions.Add(Vector2.down);
+        }
+        else
+        {
+            // No possible exits, just pick any direction that this tile has an entrace of
+            if (cur_tile.left_exit)
+                possible_directions.Add(Vector2.left);
+            if (cur_tile.right_exit)
+                possible_directions.Add(Vector2.right);
+            if (cur_tile.top_exit)
+                possible_directions.Add(Vector2.up);
+            if (cur_tile.bottom_exit)
+                possible_directions.Add(Vector2.down);
+        }
+
+        if (possible_directions.Count < 1)
+        {
+            Debug.LogError("No valid directions for this Person", this.gameObject);
+        }
+        else
+        {
+            int dir_pos = Random.Range(0, possible_directions.Count);
+            new_dir = possible_directions[dir_pos];
+        }
+
+        return new_dir;
+    }
+    public Vector2 Get_Random_Direction(Vector2 excluding_this_dir)
+    {
+        Vector2 new_dir = Vector2.zero;
+        List<Vector2> possible_directions = new List<Vector2>();
+
+        if (cur_tile.exits > 0)
+        {
+            if (cur_tile.can_go_left && Vector2.left != excluding_this_dir)
+                possible_directions.Add(Vector2.left);
+            if (cur_tile.can_go_right && Vector2.right != excluding_this_dir)
+                possible_directions.Add(Vector2.right);
+            if (cur_tile.can_go_top && Vector2.up != excluding_this_dir)
+                possible_directions.Add(Vector2.up);
+            if (cur_tile.can_go_bottom && Vector2.down != excluding_this_dir)
+                possible_directions.Add(Vector2.down);
+        }
+        else
+        {
+            // No possible exits, just pick any direction that this tile has an entrace of
+            if (cur_tile.left_exit && Vector2.left != excluding_this_dir)
+                possible_directions.Add(Vector2.left);
+            if (cur_tile.right_exit && Vector2.right != excluding_this_dir)
+                possible_directions.Add(Vector2.right);
+            if (cur_tile.top_exit && Vector2.up != excluding_this_dir)
+                possible_directions.Add(Vector2.up);
+            if (cur_tile.bottom_exit && Vector2.down != excluding_this_dir)
+                possible_directions.Add(Vector2.down);
+        }
+
+        if (possible_directions.Count < 1)
+        {
+            //Debug.LogError("No valid direction for Person excluding dir, exits: " + cur_tile.exits + ", entrances: " + cur_tile.entrances, this.gameObject);
+            // No other valid exits? Just go back the way we came
+            return excluding_this_dir;
+        }
+        else
+        {
+            int dir_pos = Random.Range(0, possible_directions.Count);
+            new_dir = possible_directions[dir_pos];
         }
 
         return new_dir;

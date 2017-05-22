@@ -10,6 +10,7 @@ public class HighlightCircle : MonoBehaviour
     float initial_scale = 5f;
     float counter = 0;
     float rate_of_change = 0.5f;
+    float waiting_counter = 2.5f;
 
     void Start ()
     {
@@ -18,7 +19,6 @@ public class HighlightCircle : MonoBehaviour
         c.a = 0;
         s.color = c;
     }
-
 
     void Update ()
     {
@@ -41,6 +41,10 @@ public class HighlightCircle : MonoBehaviour
         }
         else
         {
+            waiting_counter -= Time.deltaTime;
+            if (waiting_counter >= 0)
+                return;
+
             // Fade out
             counter -= Time.deltaTime * 2f;
             Color c = s.color;

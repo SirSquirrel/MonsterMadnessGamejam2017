@@ -48,4 +48,10 @@ public class Quit : MonoBehaviour
     {
         Settings.Endless_Mode = mode;
     }
+
+
+    public void OpenURL(string url)
+    {
+        Application.OpenURL(url);
+    }
 }

@@ -5,8 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/FM Splash Screen/SplashScreen.unity
+  - enabled: 1
+    path: Assets/Levels/MainMenu.unity
   - enabled: 1
     path: Assets/Levels/1.unity
   - enabled: 1
@@ -36,4 +38,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Levels/14.unity
   - enabled: 1
-    path: Assets/Levels/MainMenu.unity
+    path: Assets/Levels/15.unity
+  - enabled: 1
+    path: Assets/Levels/16.unity
+  - enabled: 1
+    path: Assets/Levels/17.unity
+  - enabled: 1
+    path: Assets/Levels/18.unity
