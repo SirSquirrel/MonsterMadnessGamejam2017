@@ -30,7 +30,6 @@ public class GameState : MonoBehaviour
 
     public GameObject game_over_text_options;
 
-
     void Awake ()
     {
         game_state = this;

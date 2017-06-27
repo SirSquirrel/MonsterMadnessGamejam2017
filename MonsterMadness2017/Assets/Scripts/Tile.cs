@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
@@ -165,7 +166,14 @@ public class Tile : MonoBehaviour
 
     public void Swap()
     {
-
+        if(TileManager.tileManager.limitedMoves)
+        {
+            if(TileManager.tileManager.tileMovesAllowed <= 0)
+            {
+                return;
+            }
+            TileManager.tileManager.tileMovesAllowed = TileManager.tileManager.tileMovesAllowed - 1;
+        }
         Tile tile_to_swap = TileManager.tileManager.curTileSelected;
         TileManager.tileManager.PlaySwapSound();
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TileManager : MonoBehaviour {
 
@@ -10,9 +11,18 @@ public class TileManager : MonoBehaviour {
     public GameObject highlight;
     public AudioSource[] Sounds;
 
-	// Use this for initialization
-	void Start () {
+    //these variables are only used for challenge levels where the player has a limited number of moves
+    public bool limitedMoves = false;
+    public int tileMovesAllowed = 10;
+    public Text textMovesLeft;
+
+    // Use this for initialization
+    void Start () {
         tileManager = this;
+        if (limitedMoves)
+        {
+            textMovesLeft.gameObject.SetActive(true);
+        }
 	}
 	
 	// Update is called once per frame
@@ -42,6 +52,12 @@ public class TileManager : MonoBehaviour {
                 }
             }
         }
+        if (limitedMoves)
+        {
+            textMovesLeft.text = tileMovesAllowed.ToString();
+        }
+
+        
     }
 
     public void PlaySwapSound()
