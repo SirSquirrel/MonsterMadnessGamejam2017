@@ -44,6 +44,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 1751831241
+    locked: 0
+  - name: Unlit Tile
+    uniqueID: 2078787105
+    locked: 0
+  - name: Lit Tile
+    uniqueID: 2599532911
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Moving Entities
+    uniqueID: 3449373585
     locked: 0
