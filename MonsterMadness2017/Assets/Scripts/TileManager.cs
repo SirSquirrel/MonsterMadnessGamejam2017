@@ -73,6 +73,20 @@ public class TileManager : MonoBehaviour {
         float curDistance;
         float distanceToClosestTile = float.PositiveInfinity;
         //Check if Input has registered more than zero touches
+        for (int i = 0; i < GameState.game_state.Victims.Count; i++)
+        {
+            if (GameState.game_state.Victims[i].GetComponent<Person>().cur_tile == curTileSelected)
+            {
+                Instantiate(Resources.Load("XOutlineDiesAtTime"), TileManager.tileManager.curTileSelected.transform.position, TileManager.tileManager.curTileSelected.transform.rotation);
+                TileManager.tileManager.hasTileSelected = false;
+                TileManager.tileManager.curTileSelected = null;
+                if (highlight != null)
+                {
+                    Destroy(highlight);
+
+                }
+            }
+        }
         if (Input.touchCount > 0)
         {
             Touch myTouch = Input.touches[0];
@@ -115,7 +129,7 @@ public class TileManager : MonoBehaviour {
                         curTileSelected = closestTile.GetComponent<Tile>();
                         hasTileSelected = true;
                         //Destroy(tempHighlight);
-                        highlight = (GameObject)Instantiate(Resources.Load("Highlight"), transform.position, transform.rotation);
+                        highlight = (GameObject)Instantiate(Resources.Load("Highlight"), curTileSelected.transform.position, curTileSelected.transform.rotation);
                     //}
                 }
             }
