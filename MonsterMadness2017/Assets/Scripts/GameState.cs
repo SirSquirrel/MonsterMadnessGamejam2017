@@ -30,6 +30,11 @@ public class GameState : MonoBehaviour
 
     public GameObject game_over_text_options;
 
+    // these three variables are only used during the monster feeding challenge levels
+    public bool monsterEatLevel = false;
+    public int monsterEaten = 0;
+    public int monsterEatVictory = 5;
+
     void Awake ()
     {
         game_state = this;
@@ -53,6 +58,7 @@ public class GameState : MonoBehaviour
             victory_counting_down = true;
             timer.gameObject.SetActive(true);
         }
+        
     }
 
 

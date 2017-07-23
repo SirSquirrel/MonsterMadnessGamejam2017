@@ -23,6 +23,19 @@ public class MonsterCollision : MonoBehaviour {
             Destroy(collider.gameObject);
             scream.Play();
             Instantiate(Resources.Load("blood"), transform.position, transform.rotation);
+
+            if(GameState.game_state.monsterEatLevel)
+            {
+                GameState.game_state.monsterEaten++;
+                if (GameState.game_state.monsterEatLevel)
+                {
+                    if (GameState.game_state.monsterEaten >= GameState.game_state.monsterEatVictory)
+                    {
+                        GameState.game_state.victory_counting_down = true;
+                        GameState.game_state.timer.gameObject.SetActive(true);
+                    }
+                }
+            }
         }
     }
 }

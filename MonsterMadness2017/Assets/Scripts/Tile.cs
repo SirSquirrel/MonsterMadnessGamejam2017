@@ -51,6 +51,7 @@ public class Tile : MonoBehaviour
             entrances++;
     }
 
+#if UNITY_STANDALONE || UNITY_WEBPLAYER || UNITY_EDITOR
     void OnMouseOver()
     {
         bool man_on = false;
@@ -107,6 +108,54 @@ public class Tile : MonoBehaviour
     {
             Destroy(temporary_highlight);
             Destroy(x_outline);
+    }
+#endif
+
+    // a function to be called for the touch controls to highligh selected tile, Called from TileManager
+    public void highlightTouch()
+    {
+        //this function wasn't actually that helpfull with the touch controls. 
+        //
+        //bool man_on = false;
+        //for (int i = 0; i < GameState.game_state.Victims.Count; i++)
+        //{
+        //    if (GameState.game_state.Victims[i].GetComponent<Person>().cur_tile == this)
+        //    {
+        //        man_on = true;
+        //        if (temporary_highlight != null)
+        //        {
+        //            Destroy(temporary_highlight);
+        //        }
+        //    }
+        //}
+
+        //if ((man_on || !can_be_swapped) && x_outline == null)
+        //{
+        //    x_outline = (GameObject)Instantiate(Resources.Load("XOutline"), transform.position, transform.rotation);
+        //}
+
+        //if (!man_on)
+        //{
+        //    if (temporary_highlight == null && can_be_swapped && TileManager.tileManager.curTileSelected != this)
+        //    {
+        //        //delete the old highlight when dragging your finger off of the old tile
+        //        if(TileManager.tileManager.tempHighlight != temporary_highlight)
+        //        {
+        //            Destroy(TileManager.tileManager.tempHighlight);
+        //            TileManager.tileManager.highlight = null;
+        //        }
+        //        temporary_highlight = (GameObject)Instantiate(Resources.Load("TemporaryHighlight"), transform.position, transform.rotation);
+        //        TileManager.tileManager.tempHighlight = temporary_highlight;
+        //    }
+
+        //    if (can_be_swapped)
+        //    {
+        //        if (x_outline != null)
+        //        {
+        //            Destroy(x_outline);
+        //        }
+        //    }
+        //}
     }
 
     void Update()

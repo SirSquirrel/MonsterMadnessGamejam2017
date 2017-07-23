@@ -6,15 +6,20 @@ using UnityEngine.UI;
 public class TileManager : MonoBehaviour {
 
     public static TileManager tileManager;
+    public GameObject[] tileList;
     public Tile curTileSelected;
     public bool hasTileSelected;
     public GameObject highlight;
+    public GameObject tempHighlight;
     public AudioSource[] Sounds;
 
     //these variables are only used for challenge levels where the player has a limited number of moves
     public bool limitedMoves = false;
     public int tileMovesAllowed = 10;
     public Text textMovesLeft;
+
+    //rough size of the tile, should actually be square root of 2 but we want a slight buffer zone
+    public float tileSize = 1.5f;
 
     // Use this for initialization
     void Start () {
@@ -23,10 +28,13 @@ public class TileManager : MonoBehaviour {
         {
             textMovesLeft.gameObject.SetActive(true);
         }
+        tileList = GameObject.FindGameObjectsWithTag("Tile");
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        //two different control schemes one for PC and web, one for IOS and android
+#if UNITY_STANDALONE || UNITY_WEBPLAYER || UNITY_EDITOR
         if (Input.GetMouseButtonDown(1) && TileManager.tileManager.hasTileSelected)
         {
             Debug.Log("Deselected");
@@ -56,8 +64,108 @@ public class TileManager : MonoBehaviour {
         {
             textMovesLeft.text = tileMovesAllowed.ToString();
         }
+#endif
 
-        
+        //Check if we are running on iOS, Android, Windows Phone 8 or Unity iPhone  
+#if UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
+        GameObject closestTile = tileList[0];
+        //just a placeholder to become the magnitude of a vector subtraction
+        float curDistance;
+        float distanceToClosestTile = float.PositiveInfinity;
+        //Check if Input has registered more than zero touches
+        if (Input.touchCount > 0)
+        {
+            Touch myTouch = Input.touches[0];
+            if (!hasTileSelected)
+            {
+                if (myTouch.phase == TouchPhase.Began || myTouch.phase == TouchPhase.Moved || myTouch.phase == TouchPhase.Stationary && !hasTileSelected)
+                {
+                    // decided not to highlight touched tile
+
+                    //for (int i = 0; i < tileList.Length; i++)
+                    //{
+                    //    curDistance = (Camera.main.ScreenToWorldPoint(myTouch.position) - tileList[i].transform.position).magnitude;
+                    //    if (curDistance < distanceToClosestTile)
+                    //    {
+                    //        distanceToClosestTile = curDistance;
+                    //        closestTile = tileList[i];
+                    //    }
+                    //}
+
+                    ////if (distanceToClosestTile < tileSize)
+                    ////{
+                    //    closestTile.GetComponent<Tile>().highlightTouch();
+                    ////}
+                }
+
+                if (myTouch.phase == TouchPhase.Ended)
+                {
+                    for (int i = 0; i < tileList.Length; i++)
+                    {
+                        curDistance = (Camera.main.ScreenToWorldPoint(myTouch.position) - tileList[i].transform.position).magnitude;
+                        if (curDistance < distanceToClosestTile)
+                        {
+                            distanceToClosestTile = curDistance;
+                            closestTile = tileList[i];
+                        }
+                    }
+
+                    //if (distanceToClosestTile < tileSize)
+                    //{
+                        curTileSelected = closestTile.GetComponent<Tile>();
+                        hasTileSelected = true;
+                        //Destroy(tempHighlight);
+                        highlight = (GameObject)Instantiate(Resources.Load("Highlight"), transform.position, transform.rotation);
+                    //}
+                }
+            }
+
+            else
+            {
+                if (myTouch.phase == TouchPhase.Began || myTouch.phase == TouchPhase.Moved || myTouch.phase == TouchPhase.Stationary && !hasTileSelected)
+                {
+                    //commented out fo reasons above
+
+                    //for (int i = 0; i < tileList.Length; i++)
+                    //{
+                    //    curDistance = (Camera.main.ScreenToWorldPoint(myTouch.position) - tileList[i].transform.position).magnitude;
+                    //    if (curDistance < distanceToClosestTile)
+                    //    {
+                    //        distanceToClosestTile = curDistance;
+                    //        closestTile = tileList[i];
+                    //    }
+                    //}
+
+                    ////if (distanceToClosestTile < tileSize)
+                    ////{
+                    //closestTile.GetComponent<Tile>().highlightTouch();
+                    ////}
+                }
+
+                if (myTouch.phase == TouchPhase.Ended)
+                {
+                    for (int i = 0; i < tileList.Length; i++)
+                    {
+                        curDistance = (Camera.main.ScreenToWorldPoint(myTouch.position) - tileList[i].transform.position).magnitude;
+                        if (curDistance < distanceToClosestTile)
+                        {
+                            distanceToClosestTile = curDistance;
+                            closestTile = tileList[i];
+                        }
+                    }
+
+                    //if (distanceToClosestTile < tileSize)
+                    //{
+                    closestTile.GetComponent<Tile>().Swap();
+                    hasTileSelected = false;
+                    curTileSelected = null;
+                    Destroy(highlight);
+                    //}
+                }
+            }
+        }
+#endif
+
     }
 
     public void PlaySwapSound()
