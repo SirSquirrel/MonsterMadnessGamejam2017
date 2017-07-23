@@ -91,14 +91,15 @@ public class Tile : MonoBehaviour
                     TileManager.tileManager.hasTileSelected = true;
                     TileManager.tileManager.curTileSelected = this;
                     Destroy(temporary_highlight);
-                    TileManager.tileManager.highlight = (GameObject)Instantiate(Resources.Load("Highlight"), transform.position, transform.rotation);
+                    TileManager.tileManager.highlight.transform.position = transform.position;
+                    TileManager.tileManager.highlight.SetActive(true);
                 }
                 else if (Input.GetMouseButtonDown(0) && TileManager.tileManager.hasTileSelected)
                 {
                     Swap();
                     TileManager.tileManager.hasTileSelected = false;
                     TileManager.tileManager.curTileSelected = null;
-                    Destroy(TileManager.tileManager.highlight);
+                    TileManager.tileManager.highlight.SetActive(false);
                 }
             }
         }

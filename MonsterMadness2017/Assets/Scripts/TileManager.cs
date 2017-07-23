@@ -29,7 +29,11 @@ public class TileManager : MonoBehaviour {
             textMovesLeft.gameObject.SetActive(true);
         }
         tileList = GameObject.FindGameObjectsWithTag("Tile");
-	}
+        highlight = (GameObject)Instantiate(Resources.Load("Highlight"));
+        highlight.SetActive(false);
+        tempHighlight = (GameObject)Instantiate(Resources.Load("TemporaryHighlight"));
+        tempHighlight.SetActive(false);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -40,10 +44,7 @@ public class TileManager : MonoBehaviour {
             Debug.Log("Deselected");
             TileManager.tileManager.hasTileSelected = false;
             TileManager.tileManager.curTileSelected = null;
-            if (highlight!=null)
-            {
-                Destroy(highlight);
-            }
+            highlight.SetActive(false);
         }
 
         for (int i = 0; i < GameState.game_state.Victims.Count; i++)
@@ -53,11 +54,7 @@ public class TileManager : MonoBehaviour {
                 Instantiate(Resources.Load("XOutlineDiesAtTime"), TileManager.tileManager.curTileSelected.transform.position, TileManager.tileManager.curTileSelected.transform.rotation);
                 TileManager.tileManager.hasTileSelected = false;
                 TileManager.tileManager.curTileSelected = null;
-                if (highlight != null)
-                {
-                    Destroy(highlight);
-                   
-                }
+                highlight.SetActive(false);
             }
         }
         if (limitedMoves)
@@ -80,11 +77,7 @@ public class TileManager : MonoBehaviour {
                 Instantiate(Resources.Load("XOutlineDiesAtTime"), TileManager.tileManager.curTileSelected.transform.position, TileManager.tileManager.curTileSelected.transform.rotation);
                 TileManager.tileManager.hasTileSelected = false;
                 TileManager.tileManager.curTileSelected = null;
-                if (highlight != null)
-                {
-                    Destroy(highlight);
-
-                }
+                highlight.SetActive(false);
             }
         }
         if (Input.touchCount > 0)
@@ -129,7 +122,7 @@ public class TileManager : MonoBehaviour {
                         curTileSelected = closestTile.GetComponent<Tile>();
                         hasTileSelected = true;
                         //Destroy(tempHighlight);
-                        highlight = (GameObject)Instantiate(Resources.Load("Highlight"), curTileSelected.transform.position, curTileSelected.transform.rotation);
+                        highlight.transform.position = curTileSelected.transform.position;
                     //}
                 }
             }
@@ -173,7 +166,7 @@ public class TileManager : MonoBehaviour {
                     closestTile.GetComponent<Tile>().Swap();
                     hasTileSelected = false;
                     curTileSelected = null;
-                    Destroy(highlight);
+                    highlight.SetActive(false);
                     //}
                 }
             }
