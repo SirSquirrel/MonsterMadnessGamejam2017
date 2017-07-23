@@ -86,7 +86,7 @@ public class Tile : MonoBehaviour
                 {
                     Destroy(x_outline);
                 }
-                if (Input.GetMouseButtonDown(0) && !TileManager.tileManager.hasTileSelected)
+                if (Input.GetMouseButtonDown(0) && !TileManager.tileManager.hasTileSelected && !Pause.pause.paused)
                 {
                     TileManager.tileManager.hasTileSelected = true;
                     TileManager.tileManager.curTileSelected = this;
@@ -94,7 +94,7 @@ public class Tile : MonoBehaviour
                     TileManager.tileManager.highlight.transform.position = transform.position;
                     TileManager.tileManager.highlight.SetActive(true);
                 }
-                else if (Input.GetMouseButtonDown(0) && TileManager.tileManager.hasTileSelected)
+                else if (Input.GetMouseButtonDown(0) && TileManager.tileManager.hasTileSelected && !Pause.pause.paused)
                 {
                     Swap();
                     TileManager.tileManager.hasTileSelected = false;

@@ -105,7 +105,7 @@ public class TileManager : MonoBehaviour {
                     ////}
                 }
 
-                if (myTouch.phase == TouchPhase.Ended)
+                if (myTouch.phase == TouchPhase.Ended && !Pause.pause.paused)
                 {
                     for (int i = 0; i < tileList.Length; i++)
                     {
@@ -123,6 +123,7 @@ public class TileManager : MonoBehaviour {
                         hasTileSelected = true;
                         //Destroy(tempHighlight);
                         highlight.transform.position = curTileSelected.transform.position;
+                    highlight.SetActive(true);
                     //}
                 }
             }
@@ -149,7 +150,7 @@ public class TileManager : MonoBehaviour {
                     ////}
                 }
 
-                if (myTouch.phase == TouchPhase.Ended)
+                if (myTouch.phase == TouchPhase.Ended && !Pause.pause.paused)
                 {
                     for (int i = 0; i < tileList.Length; i++)
                     {
