@@ -23,6 +23,15 @@ public class TileManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        StartCoroutine(LateStart());
+        
+    }
+
+    //just make sure the level has loaded before getting the tile list
+    IEnumerator LateStart()
+    {
+        yield return new WaitForSeconds(2);
+        //wait a little for the stage to load
         tileManager = this;
         if (limitedMoves)
         {
@@ -33,147 +42,150 @@ public class TileManager : MonoBehaviour {
         highlight.SetActive(false);
         tempHighlight = (GameObject)Instantiate(Resources.Load("TemporaryHighlight"));
         tempHighlight.SetActive(false);
-    }
-	
-	// Update is called once per frame
-	void Update () {
-        //two different control schemes one for PC and web, one for IOS and android
-#if UNITY_STANDALONE || UNITY_WEBPLAYER || UNITY_EDITOR
-        if (Input.GetMouseButtonDown(1) && TileManager.tileManager.hasTileSelected)
-        {
-            Debug.Log("Deselected");
-            TileManager.tileManager.hasTileSelected = false;
-            TileManager.tileManager.curTileSelected = null;
-            highlight.SetActive(false);
-        }
 
-        for (int i = 0; i < GameState.game_state.Victims.Count; i++)
+    }
+
+    // Update is called once per frame
+    void Update () {
+        if (tileList.Length > 0)
         {
-            if (GameState.game_state.Victims[i].GetComponent<Person>().cur_tile == curTileSelected)
+            //two different control schemes one for PC and web, one for IOS and android
+#if UNITY_STANDALONE || UNITY_WEBPLAYER || UNITY_EDITOR
+            if (Input.GetMouseButtonDown(1) && TileManager.tileManager.hasTileSelected)
             {
-                Instantiate(Resources.Load("XOutlineDiesAtTime"), TileManager.tileManager.curTileSelected.transform.position, TileManager.tileManager.curTileSelected.transform.rotation);
+                Debug.Log("Deselected");
                 TileManager.tileManager.hasTileSelected = false;
                 TileManager.tileManager.curTileSelected = null;
                 highlight.SetActive(false);
             }
-        }
-        if (limitedMoves)
-        {
-            textMovesLeft.text = tileMovesAllowed.ToString();
-        }
+
+            for (int i = 0; i < GameState.game_state.Victims.Count; i++)
+            {
+                if (GameState.game_state.Victims[i].GetComponent<Person>().cur_tile == curTileSelected)
+                {
+                    Instantiate(Resources.Load("XOutlineDiesAtTime"), TileManager.tileManager.curTileSelected.transform.position, TileManager.tileManager.curTileSelected.transform.rotation);
+                    TileManager.tileManager.hasTileSelected = false;
+                    TileManager.tileManager.curTileSelected = null;
+                    highlight.SetActive(false);
+                }
+            }
+            if (limitedMoves)
+            {
+                textMovesLeft.text = tileMovesAllowed.ToString();
+            }
 #endif
 
-        //Check if we are running on iOS, Android, Windows Phone 8 or Unity iPhone  
+            //Check if we are running on iOS, Android, Windows Phone 8 or Unity iPhone  
 #if UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
-        GameObject closestTile = tileList[0];
-        //just a placeholder to become the magnitude of a vector subtraction
-        float curDistance;
-        float distanceToClosestTile = float.PositiveInfinity;
-        //Check if Input has registered more than zero touches
-        for (int i = 0; i < GameState.game_state.Victims.Count; i++)
-        {
-            if (GameState.game_state.Victims[i].GetComponent<Person>().cur_tile == curTileSelected)
+            GameObject closestTile = tileList[0];
+            //just a placeholder to become the magnitude of a vector subtraction
+            float curDistance;
+            float distanceToClosestTile = float.PositiveInfinity;
+            //Check if Input has registered more than zero touches
+            for (int i = 0; i < GameState.game_state.Victims.Count; i++)
             {
-                Instantiate(Resources.Load("XOutlineDiesAtTime"), TileManager.tileManager.curTileSelected.transform.position, TileManager.tileManager.curTileSelected.transform.rotation);
-                TileManager.tileManager.hasTileSelected = false;
-                TileManager.tileManager.curTileSelected = null;
-                highlight.SetActive(false);
-            }
-        }
-        if (Input.touchCount > 0)
-        {
-            Touch myTouch = Input.touches[0];
-            if (!hasTileSelected)
-            {
-                if (myTouch.phase == TouchPhase.Began || myTouch.phase == TouchPhase.Moved || myTouch.phase == TouchPhase.Stationary && !hasTileSelected)
+                if (GameState.game_state.Victims[i].GetComponent<Person>().cur_tile == curTileSelected)
                 {
-                    // decided not to highlight touched tile
-
-                    //for (int i = 0; i < tileList.Length; i++)
-                    //{
-                    //    curDistance = (Camera.main.ScreenToWorldPoint(myTouch.position) - tileList[i].transform.position).magnitude;
-                    //    if (curDistance < distanceToClosestTile)
-                    //    {
-                    //        distanceToClosestTile = curDistance;
-                    //        closestTile = tileList[i];
-                    //    }
-                    //}
-
-                    ////if (distanceToClosestTile < tileSize)
-                    ////{
-                    //    closestTile.GetComponent<Tile>().highlightTouch();
-                    ////}
+                    Instantiate(Resources.Load("XOutlineDiesAtTime"), TileManager.tileManager.curTileSelected.transform.position, TileManager.tileManager.curTileSelected.transform.rotation);
+                    TileManager.tileManager.hasTileSelected = false;
+                    TileManager.tileManager.curTileSelected = null;
+                    highlight.SetActive(false);
                 }
-
-                if (myTouch.phase == TouchPhase.Ended && !Pause.pause.paused)
+            }
+            if (Input.touchCount > 0)
+            {
+                Touch myTouch = Input.touches[0];
+                if (!hasTileSelected)
                 {
-                    for (int i = 0; i < tileList.Length; i++)
+                    if (myTouch.phase == TouchPhase.Began || myTouch.phase == TouchPhase.Moved || myTouch.phase == TouchPhase.Stationary && !hasTileSelected)
                     {
-                        curDistance = (Camera.main.ScreenToWorldPoint(myTouch.position) - tileList[i].transform.position).magnitude;
-                        if (curDistance < distanceToClosestTile)
-                        {
-                            distanceToClosestTile = curDistance;
-                            closestTile = tileList[i];
-                        }
+                        // decided not to highlight touched tile
+
+                        //for (int i = 0; i < tileList.Length; i++)
+                        //{
+                        //    curDistance = (Camera.main.ScreenToWorldPoint(myTouch.position) - tileList[i].transform.position).magnitude;
+                        //    if (curDistance < distanceToClosestTile)
+                        //    {
+                        //        distanceToClosestTile = curDistance;
+                        //        closestTile = tileList[i];
+                        //    }
+                        //}
+
+                        ////if (distanceToClosestTile < tileSize)
+                        ////{
+                        //    closestTile.GetComponent<Tile>().highlightTouch();
+                        ////}
                     }
 
-                    //if (distanceToClosestTile < tileSize)
-                    //{
+                    if (myTouch.phase == TouchPhase.Ended && !Pause.pause.paused)
+                    {
+                        for (int i = 0; i < tileList.Length; i++)
+                        {
+                            curDistance = (Camera.main.ScreenToWorldPoint(myTouch.position) - tileList[i].transform.position).magnitude;
+                            if (curDistance < distanceToClosestTile)
+                            {
+                                distanceToClosestTile = curDistance;
+                                closestTile = tileList[i];
+                            }
+                        }
+
+                        //if (distanceToClosestTile < tileSize)
+                        //{
                         curTileSelected = closestTile.GetComponent<Tile>();
                         hasTileSelected = true;
                         //Destroy(tempHighlight);
                         highlight.transform.position = curTileSelected.transform.position;
-                    highlight.SetActive(true);
-                    //}
-                }
-            }
-
-            else
-            {
-                if (myTouch.phase == TouchPhase.Began || myTouch.phase == TouchPhase.Moved || myTouch.phase == TouchPhase.Stationary && !hasTileSelected)
-                {
-                    //commented out fo reasons above
-
-                    //for (int i = 0; i < tileList.Length; i++)
-                    //{
-                    //    curDistance = (Camera.main.ScreenToWorldPoint(myTouch.position) - tileList[i].transform.position).magnitude;
-                    //    if (curDistance < distanceToClosestTile)
-                    //    {
-                    //        distanceToClosestTile = curDistance;
-                    //        closestTile = tileList[i];
-                    //    }
-                    //}
-
-                    ////if (distanceToClosestTile < tileSize)
-                    ////{
-                    //closestTile.GetComponent<Tile>().highlightTouch();
-                    ////}
+                        highlight.SetActive(true);
+                        //}
+                    }
                 }
 
-                if (myTouch.phase == TouchPhase.Ended && !Pause.pause.paused)
+                else
                 {
-                    for (int i = 0; i < tileList.Length; i++)
+                    if (myTouch.phase == TouchPhase.Began || myTouch.phase == TouchPhase.Moved || myTouch.phase == TouchPhase.Stationary && !hasTileSelected)
                     {
-                        curDistance = (Camera.main.ScreenToWorldPoint(myTouch.position) - tileList[i].transform.position).magnitude;
-                        if (curDistance < distanceToClosestTile)
-                        {
-                            distanceToClosestTile = curDistance;
-                            closestTile = tileList[i];
-                        }
+                        //commented out fo reasons above
+
+                        //for (int i = 0; i < tileList.Length; i++)
+                        //{
+                        //    curDistance = (Camera.main.ScreenToWorldPoint(myTouch.position) - tileList[i].transform.position).magnitude;
+                        //    if (curDistance < distanceToClosestTile)
+                        //    {
+                        //        distanceToClosestTile = curDistance;
+                        //        closestTile = tileList[i];
+                        //    }
+                        //}
+
+                        ////if (distanceToClosestTile < tileSize)
+                        ////{
+                        //closestTile.GetComponent<Tile>().highlightTouch();
+                        ////}
                     }
 
-                    //if (distanceToClosestTile < tileSize)
-                    //{
-                    closestTile.GetComponent<Tile>().Swap();
-                    hasTileSelected = false;
-                    curTileSelected = null;
-                    highlight.SetActive(false);
-                    //}
+                    if (myTouch.phase == TouchPhase.Ended && !Pause.pause.paused)
+                    {
+                        for (int i = 0; i < tileList.Length; i++)
+                        {
+                            curDistance = (Camera.main.ScreenToWorldPoint(myTouch.position) - tileList[i].transform.position).magnitude;
+                            if (curDistance < distanceToClosestTile)
+                            {
+                                distanceToClosestTile = curDistance;
+                                closestTile = tileList[i];
+                            }
+                        }
+
+                        //if (distanceToClosestTile < tileSize)
+                        //{
+                        closestTile.GetComponent<Tile>().Swap();
+                        hasTileSelected = false;
+                        curTileSelected = null;
+                        highlight.SetActive(false);
+                        //}
+                    }
                 }
             }
-        }
 #endif
-
+        }
     }
 
     public void PlaySwapSound()

@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1405998972563780}
+  m_IsPrefabParent: 1
+--- !u!1 &1405998972563780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4457422484587546}
+  - component: {fileID: 114778051276050900}
+  m_Layer: 0
+  m_Name: RandomStageGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4457422484587546
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1405998972563780}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.0774086, y: -0.8123543, z: -26.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114778051276050900
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1405998972563780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acb418a715f80924fbb5230048261dbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageSizeX: 9
+  stageSizeY: 5
+  stageDifficulty: 1
+  entranceTiles:
+  - {fileID: 1145822823754004, guid: 51170188137e2e74ca875e5d2be5f5cf, type: 2}
+  - {fileID: 1889151231214186, guid: 2c50ef86f91a6ae42bae06dce6def58b, type: 2}
+  - {fileID: 1623221328595742, guid: 47e09efd0aff457408c20a93cc8c4732, type: 2}
+  - {fileID: 1750645946125746, guid: b43700972c8c62943afa72651fa3cdef, type: 2}
+  regularTiles:
+  - {fileID: 1222794397439386, guid: 0c389b91a50656c449c023191d0cf510, type: 2}
+  - {fileID: 1721849970734390, guid: 038f0e0f2f129434a95c88a42846be4e, type: 2}
+  - {fileID: 1216994646963036, guid: 4d1d7755d2b28d64592b566c61a5c730, type: 2}
+  - {fileID: 1304131196230564, guid: 954f37c0696a8d247a2282111a65fecb, type: 2}
+  - {fileID: 1876477815544276, guid: f3059e611ab53474e8d6dd8e2d70e944, type: 2}
+  - {fileID: 1499551434930814, guid: 0fd98f446d6efc5488fe5d7c2797dde0, type: 2}
+  - {fileID: 1429159368802782, guid: 390261ff63d374a4f93d5c639e76dce6, type: 2}
+  - {fileID: 1309950623886136, guid: 81eda0593206fe0409bb1a35e3dc3d0a, type: 2}
+  - {fileID: 1618312114534770, guid: 01f97bd95e9f66e4fb8654918b824f09, type: 2}
+  - {fileID: 1034282047847314, guid: 020923ab48787604c9ea24358220c309, type: 2}
+  - {fileID: 1555135928467750, guid: 5b6bc9ecf1c76384ca54af9773a23acd, type: 2}
+  - {fileID: 1230525411973968, guid: eba2027e958c79f49aed409a4eb2a045, type: 2}
+  - {fileID: 1243447142389828, guid: 17e1b1d69627ed649a934c8625ec4b99, type: 2}
+  - {fileID: 1977665016562258, guid: 8e936d5ef92fac74aa6f8cb20b8fc2ec, type: 2}
+  - {fileID: 1275586438555832, guid: faaf9fcb925c6c34eb84c19e4d7e68d1, type: 2}
+  - {fileID: 1913959986432978, guid: 9cb2a2fedc24a8941a7cfb8e62615a50, type: 2}
+  twoWayTopTiles:
+  - {fileID: 1499551434930814, guid: 0fd98f446d6efc5488fe5d7c2797dde0, type: 2}
+  - {fileID: 1243447142389828, guid: 17e1b1d69627ed649a934c8625ec4b99, type: 2}
+  - {fileID: 1977665016562258, guid: 8e936d5ef92fac74aa6f8cb20b8fc2ec, type: 2}
+  twoWayLeftTiles:
+  - {fileID: 1876477815544276, guid: f3059e611ab53474e8d6dd8e2d70e944, type: 2}
+  - {fileID: 1499551434930814, guid: 0fd98f446d6efc5488fe5d7c2797dde0, type: 2}
+  - {fileID: 1555135928467750, guid: 5b6bc9ecf1c76384ca54af9773a23acd, type: 2}
+  twoWayRightTiles:
+  - {fileID: 1034282047847314, guid: 020923ab48787604c9ea24358220c309, type: 2}
+  - {fileID: 1555135928467750, guid: 5b6bc9ecf1c76384ca54af9773a23acd, type: 2}
+  - {fileID: 1977665016562258, guid: 8e936d5ef92fac74aa6f8cb20b8fc2ec, type: 2}
+  twoWayBottomTiles:
+  - {fileID: 1876477815544276, guid: f3059e611ab53474e8d6dd8e2d70e944, type: 2}
+  - {fileID: 1034282047847314, guid: 020923ab48787604c9ea24358220c309, type: 2}
+  - {fileID: 1243447142389828, guid: 17e1b1d69627ed649a934c8625ec4b99, type: 2}
+  entrancesSpawned: []
