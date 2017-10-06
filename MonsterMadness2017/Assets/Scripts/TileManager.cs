@@ -99,7 +99,7 @@ public class TileManager : MonoBehaviour {
                 {
                     if (myTouch.phase == TouchPhase.Began || myTouch.phase == TouchPhase.Moved || myTouch.phase == TouchPhase.Stationary && !hasTileSelected)
                     {
-                        // decided not to highlight touched tile
+                        // decided not to highlight touched tile until finger removed from screens
 
                         //for (int i = 0; i < tileList.Length; i++)
                         //{
