@@ -12,14 +12,18 @@ public class TileManager : MonoBehaviour {
     public GameObject highlight;
     public GameObject tempHighlight;
     public AudioSource[] Sounds;
+    public Text swapCounter;
+
+    //swaps done
+    public int swapsDone = 0;
 
     //these variables are only used for challenge levels where the player has a limited number of moves
     public bool limitedMoves = false;
     public int tileMovesAllowed = 10;
     public Text textMovesLeft;
 
-    //rough size of the tile, should actually be square root of 2 but we want a slight buffer zone
-    public float tileSize = 1.5f;
+    //used for the raycast
+    private float tileSize = 1f;
 
     // Use this for initialization
     void Start () {
@@ -42,21 +46,24 @@ public class TileManager : MonoBehaviour {
         highlight.SetActive(false);
         tempHighlight = (GameObject)Instantiate(Resources.Load("TemporaryHighlight"));
         tempHighlight.SetActive(false);
+        Debug.Log(tileSize);
 
     }
 
     // Update is called once per frame
     void Update () {
+        if(swapCounter != null)
+        {
+            swapCounter.text = "moves: " + swapsDone.ToString();
+        }
+
         if (tileList.Length > 0)
         {
             //two different control schemes one for PC and web, one for IOS and android
 #if UNITY_STANDALONE || UNITY_WEBPLAYER || UNITY_EDITOR
             if (Input.GetMouseButtonDown(1) && TileManager.tileManager.hasTileSelected)
             {
-                Debug.Log("Deselected");
-                TileManager.tileManager.hasTileSelected = false;
-                TileManager.tileManager.curTileSelected = null;
-                highlight.SetActive(false);
+                Deselect();
             }
 
             for (int i = 0; i < GameState.game_state.Victims.Count; i++)
@@ -77,11 +84,8 @@ public class TileManager : MonoBehaviour {
 
             //Check if we are running on iOS, Android, Windows Phone 8 or Unity iPhone  
 #if UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
-            GameObject closestTile = tileList[0];
-            //just a placeholder to become the magnitude of a vector subtraction
-            float curDistance;
-            float distanceToClosestTile = float.PositiveInfinity;
-            //Check if Input has registered more than zero touches
+
+            LayerMask maskForTiles = LayerMask.GetMask("Tile");
             for (int i = 0; i < GameState.game_state.Victims.Count; i++)
             {
                 if (GameState.game_state.Victims[i].GetComponent<Person>().cur_tile == curTileSelected)
@@ -99,44 +103,30 @@ public class TileManager : MonoBehaviour {
                 {
                     if (myTouch.phase == TouchPhase.Began || myTouch.phase == TouchPhase.Moved || myTouch.phase == TouchPhase.Stationary && !hasTileSelected)
                     {
-                        // decided not to highlight touched tile until finger removed from screens
-
-                        //for (int i = 0; i < tileList.Length; i++)
-                        //{
-                        //    curDistance = (Camera.main.ScreenToWorldPoint(myTouch.position) - tileList[i].transform.position).magnitude;
-                        //    if (curDistance < distanceToClosestTile)
-                        //    {
-                        //        distanceToClosestTile = curDistance;
-                        //        closestTile = tileList[i];
-                        //    }
-                        //}
-
-                        ////if (distanceToClosestTile < tileSize)
-                        ////{
-                        //    closestTile.GetComponent<Tile>().highlightTouch();
-                        ////}
+                        //use this if you want something at the start of a touch
                     }
 
                     if (myTouch.phase == TouchPhase.Ended && !Pause.pause.paused)
                     {
-                        for (int i = 0; i < tileList.Length; i++)
+                        //do a raycast to see where the touch is
+                        // the setting has been changed so raycasts ignore the colliders they're in so we need to spawn the raycast outside the tile
+                        RaycastHit2D tileHit = Physics2D.Raycast((Vector2)Camera.main.ScreenToWorldPoint(myTouch.position) - new Vector2(0,tileSize), Vector2.up, tileSize, maskForTiles);
+
+                        if (tileHit)
                         {
-                            curDistance = (Camera.main.ScreenToWorldPoint(myTouch.position) - tileList[i].transform.position).magnitude;
-                            if (curDistance < distanceToClosestTile)
+                            if (tileHit.transform.gameObject.GetComponent<Tile>().can_be_swapped)
                             {
-                                distanceToClosestTile = curDistance;
-                                closestTile = tileList[i];
+                                curTileSelected = tileHit.transform.gameObject.GetComponent<Tile>();
+                                hasTileSelected = true;
+                                //Destroy(tempHighlight);
+                                highlight.transform.position = curTileSelected.transform.position;
+                                highlight.SetActive(true);
+                            }
+                            else
+                            {
+                                Instantiate(Resources.Load("XOutlineDiesAtTime"), tileHit.transform.position, tileHit.transform.rotation);
                             }
                         }
-
-                        //if (distanceToClosestTile < tileSize)
-                        //{
-                        curTileSelected = closestTile.GetComponent<Tile>();
-                        hasTileSelected = true;
-                        //Destroy(tempHighlight);
-                        highlight.transform.position = curTileSelected.transform.position;
-                        highlight.SetActive(true);
-                        //}
                     }
                 }
 
@@ -164,23 +154,24 @@ public class TileManager : MonoBehaviour {
 
                     if (myTouch.phase == TouchPhase.Ended && !Pause.pause.paused)
                     {
-                        for (int i = 0; i < tileList.Length; i++)
+                        //do a raycast to see where the touch is
+                        // the setting has been changed so raycasts ignore the colliders they're in so we need to spawn the raycast outside the tile
+                        RaycastHit2D tileHit = Physics2D.Raycast((Vector2)Camera.main.ScreenToWorldPoint(myTouch.position) - new Vector2(0, 1), Vector2.up, 2, maskForTiles);
+
+                        if (tileHit)
                         {
-                            curDistance = (Camera.main.ScreenToWorldPoint(myTouch.position) - tileList[i].transform.position).magnitude;
-                            if (curDistance < distanceToClosestTile)
+                            if (tileHit.transform.gameObject.GetComponent<Tile>().can_be_swapped)
                             {
-                                distanceToClosestTile = curDistance;
-                                closestTile = tileList[i];
+                                tileHit.transform.gameObject.GetComponent<Tile>().Swap();
+                                hasTileSelected = false;
+                                highlight.SetActive(false);
+                            }
+
+                            else
+                            {
+                                Instantiate(Resources.Load("XOutlineDiesAtTime"), tileHit.transform.position, tileHit.transform.rotation);
                             }
                         }
-
-                        //if (distanceToClosestTile < tileSize)
-                        //{
-                        closestTile.GetComponent<Tile>().Swap();
-                        hasTileSelected = false;
-                        curTileSelected = null;
-                        highlight.SetActive(false);
-                        //}
                     }
                 }
             }
@@ -194,4 +185,15 @@ public class TileManager : MonoBehaviour {
         Sounds[rand].Play();
     }
 
+    //if the player has currently selected a tile deselect it
+    public void Deselect()
+    {
+        if (curTileSelected != null)
+        {
+            Instantiate(Resources.Load("XOutlineDiesAtTime"), curTileSelected.transform.position, curTileSelected.transform.rotation);
+            TileManager.tileManager.hasTileSelected = false;
+            TileManager.tileManager.curTileSelected = null;
+            highlight.SetActive(false);
+        }
+    }
 }

@@ -47,7 +47,7 @@ public class CameraManager : MonoBehaviour
     public float GetOrphographicZoomToFit(float min_x, float min_y, float max_x, float max_y)
     {
         // Determine largest X/Y constraint
-        float x_constraint = Mathf.Max(Mathf.Abs(min_x), Mathf.Abs(max_x)) + 0.5f;
+        float x_constraint = Mathf.Max(Mathf.Abs(min_x), Mathf.Abs(max_x)) + 1.5f;
         float y_constraint = Mathf.Max(Mathf.Abs(min_y), Mathf.Abs(max_y)) + 0.5f;
 
         // Figure out if we should worry about width or height
