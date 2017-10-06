@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -129,7 +129,7 @@ public class GameState : MonoBehaviour
         {
             Scene scene_obj = SceneManager.GetSceneByName(scene);
             if (scene_obj == null || scene_obj.IsValid())
-                Debug.LogError("hi");
+                Debug.LogError("Scene object invalid");
 
             UnityEngine.SceneManagement.SceneManager.LoadScene(scene);
 
@@ -172,15 +172,11 @@ public class GameState : MonoBehaviour
         {
             if (Input.GetButtonDown("Submit") || Input.GetKeyDown(KeyCode.Y))
             {
-                // Retry this level
-                StartCoroutine(LoadSceneDelayed(1.02f, UnityEngine.SceneManagement.SceneManager.GetActiveScene().name, true));
-                defeated = false;
+                Retry();
             }
             else if (Input.GetButtonDown("Cancel") || Input.GetKey(KeyCode.N))
             {
-                // Quit to menu
-                StartCoroutine(LoadSceneDelayed(1.02f, defeat_level, true));
-                defeated = false;
+                ToMenu();
             }
         }
 
@@ -199,5 +195,19 @@ public class GameState : MonoBehaviour
         {
             Time.timeScale = 1.0f;
         }
+    }
+
+
+    public void Retry()
+    {
+        // Retry this level
+        StartCoroutine(LoadSceneDelayed(1.02f, UnityEngine.SceneManagement.SceneManager.GetActiveScene().name, true));
+        defeated = false;
+    }
+    public void ToMenu()
+    {
+        // Quit to menu
+        StartCoroutine(LoadSceneDelayed(1.02f, defeat_level, true));
+        defeated = false;
     }
 }
