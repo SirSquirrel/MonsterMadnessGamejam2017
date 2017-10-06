@@ -13,6 +13,8 @@ public class GameState : MonoBehaviour
     public List<GameObject> Victims;
     public List<Spawner> spawners;
 
+    public int max_num_swaps_star;  // This number or fewer swaps made gets you the number of swaps star
+
     public bool game_over = false;
     public bool defeated = false;
 
@@ -34,6 +36,7 @@ public class GameState : MonoBehaviour
     public bool monsterEatLevel = false;
     public int monsterEaten = 0;
     public int monsterEatVictory = 5;
+
 
     void Awake ()
     {
@@ -73,7 +76,15 @@ public class GameState : MonoBehaviour
         GameObject go = Instantiate(Resources.Load("EndLevelText") as GameObject, canvas.transform);
         go.GetComponent<Text>().text = "All Mortals Trapped!";
 
-        PlayerPrefs.SetInt(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name, Convert.ToInt32(true));
+        PlayerPrefs.SetInt(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name + LevelButton.Beaten, Convert.ToInt32(true));
+
+        // Check for # of swaps made
+        if (TileManager.tileManager.swapsDone <= max_num_swaps_star)
+            PlayerPrefs.SetInt(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name + LevelButton.Optimized, Convert.ToInt32(true));
+
+        if (Settings.Current_Difficulty == Difficulty.Hard)
+            PlayerPrefs.SetInt(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name + LevelButton.Beaten_on_fast, Convert.ToInt32(true));
+
         PlayerPrefs.Save();
 
         int next_level_id = int.Parse(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name) + 1;
