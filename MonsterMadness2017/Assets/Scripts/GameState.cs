@@ -15,6 +15,12 @@ public class GameState : MonoBehaviour
 
     public int max_num_swaps_star;  // This number or fewer swaps made gets you the number of swaps star
 
+    //victory display gameObjects should be set in editor check that first if it's not working
+    public GameObject victoryScreen;
+    public GameObject victoryMoveText;
+    public GameObject victoryStarMoves;
+    public GameObject victoryStarHard;
+
     public bool game_over = false;
     public bool defeated = false;
 
@@ -73,17 +79,24 @@ public class GameState : MonoBehaviour
         game_over = true;
         Debug.Log("Victory!", this.gameObject);
 
-        GameObject go = Instantiate(Resources.Load("EndLevelText") as GameObject, canvas.transform);
-        go.GetComponent<Text>().text = "All Mortals Trapped!";
+        victoryScreen.SetActive(true);
+
+        victoryMoveText.GetComponent<Text>().text = "Moves Taken: " + TileManager.tileManager.swapsDone;
 
         PlayerPrefs.SetInt(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name + LevelButton.Beaten, Convert.ToInt32(true));
 
         // Check for # of swaps made
         if (TileManager.tileManager.swapsDone <= max_num_swaps_star)
+        {
             PlayerPrefs.SetInt(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name + LevelButton.Optimized, Convert.ToInt32(true));
+            victoryStarMoves.SetActive(true);
+        }
 
         if (Settings.Current_Difficulty == Difficulty.Hard)
+        {
             PlayerPrefs.SetInt(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name + LevelButton.Beaten_on_fast, Convert.ToInt32(true));
+            victoryStarHard.SetActive(true);
+        }
 
         PlayerPrefs.Save();
 
