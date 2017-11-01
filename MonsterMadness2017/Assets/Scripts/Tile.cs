@@ -37,6 +37,7 @@ public class Tile : MonoBehaviour
     //whether the tile can be swapped, set to false for entrances and exits
     public bool can_be_swapped = true;
 
+
     void Start()
     {
         Find_Neighbours();
@@ -238,8 +239,13 @@ public class Tile : MonoBehaviour
         TileManager.tileManager.PlaySwapSound();
 
         Vector3 cur_position = transform.position;
+        Vector3 otherTilePos = TileManager.tileManager.curTileSelected.transform.position;
         transform.position = TileManager.tileManager.curTileSelected.transform.position;
         tile_to_swap.transform.position = cur_position;
+        GameObject transportTile1 = (GameObject)Instantiate(Resources.Load("TransportSquare"), cur_position, transform.rotation);
+        transportTile1.GetComponent<FlyToPointAndDie>().pointToGoTo = otherTilePos;
+        GameObject transportTile2 = (GameObject)Instantiate(Resources.Load("TransportSquare"), otherTilePos, transform.rotation);
+        transportTile2.GetComponent<FlyToPointAndDie>().pointToGoTo = cur_position;
         Instantiate(Resources.Load("smoke_puff"),transform.position,transform.rotation);
         Instantiate(Resources.Load("smoke_puff"), cur_position, transform.rotation);
         Find_Neighbours();

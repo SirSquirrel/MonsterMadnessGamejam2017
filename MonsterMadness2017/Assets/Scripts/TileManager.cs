@@ -8,7 +8,7 @@ public class TileManager : MonoBehaviour {
     public static TileManager tileManager;
     public GameObject[] tileList;
     public Tile curTileSelected;
-    public bool hasTileSelected;
+    public bool hasTileSelected = false;
     public GameObject highlight;
     public GameObject tempHighlight;
     public AudioSource[] Sounds;
@@ -34,7 +34,7 @@ public class TileManager : MonoBehaviour {
     //just make sure the level has loaded before getting the tile list
     IEnumerator LateStart()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.5f);
         //wait a little for the stage to load
         tileManager = this;
         if (limitedMoves)
