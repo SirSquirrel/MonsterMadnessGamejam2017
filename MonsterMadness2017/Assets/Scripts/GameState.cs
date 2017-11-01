@@ -87,6 +87,12 @@ public class GameState : MonoBehaviour
 
         PlayerPrefs.Save();
 
+
+        // Load the next level
+        string next_level = LevelManager.GetNextLevel(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        StartCoroutine(LoadSceneDelayed(game_over_wait, next_level, true));
+
+        /*
         int next_level_id = int.Parse(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name) + 1;
 
         try
@@ -99,7 +105,7 @@ public class GameState : MonoBehaviour
             Debug.LogError("Next scene is null or invalid, go to main menu " + next_level_id, this.gameObject);
             StartCoroutine(LoadSceneDelayed(game_over_wait, "MainMenu", true));
             return;
-        }
+        }*/
     }
     public void Defeat()
     {

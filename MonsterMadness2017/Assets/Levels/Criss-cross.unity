@@ -2953,6 +2953,11 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114175182495466296, guid: 8c3fbfa36ac08154d82c172af7019c63,
+        type: 2}
+      propertyPath: m_Text
+      value: Criss-cross
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8c3fbfa36ac08154d82c172af7019c63, type: 2}
   m_IsPrefabParent: 0

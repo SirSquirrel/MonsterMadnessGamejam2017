@@ -12,59 +12,59 @@ EditorBuildSettings:
     path: Assets/Levels/MainMenu.unity
     guid: ce7ef4a644ae1a24ba1f47f2fd353a02
   - enabled: 1
-    path: Assets/Levels/1.unity
+    path: Assets/Levels/Nice & Easy.unity
     guid: 5794568f74a479c4ca218333f6a0f875
   - enabled: 1
-    path: Assets/Levels/2.unity
+    path: Assets/Levels/Threeway.unity
     guid: 61afc1e4e7c7dac48a3cf55bbec824bf
   - enabled: 1
-    path: Assets/Levels/3.unity
+    path: Assets/Levels/Crowded.unity
     guid: c07314f74156e7d4ab90925f8968c7e1
   - enabled: 1
-    path: Assets/Levels/4.unity
+    path: Assets/Levels/Assigned Seating.unity
     guid: 2ab850727e635864e889fb307a655c09
   - enabled: 1
-    path: Assets/Levels/5.unity
+    path: Assets/Levels/Secret Passage.unity
     guid: e0a5cc00f7334e340aa4c46841b2700e
   - enabled: 1
-    path: Assets/Levels/6.unity
+    path: Assets/Levels/Crossroads.unity
     guid: fb7d67625e1c0454dab2cc858811f83c
   - enabled: 1
-    path: Assets/Levels/7.unity
+    path: Assets/Levels/Mansion.unity
     guid: 31469ec8b038a644281cca35ff5c6f9e
   - enabled: 1
-    path: Assets/Levels/8.unity
+    path: Assets/Levels/Monsters.unity
     guid: 7c0cc6f632d73404cba8f17612955023
   - enabled: 1
-    path: Assets/Levels/9.unity
+    path: Assets/Levels/Monster Food.unity
     guid: 78b3ec6346193bb4ca6843de0546bf9f
   - enabled: 1
-    path: Assets/Levels/10.unity
+    path: Assets/Levels/Spiral.unity
     guid: ed71a7cb7fb9d014ebb1c27caa7ea9f4
   - enabled: 1
-    path: Assets/Levels/11.unity
+    path: Assets/Levels/Criss-cross.unity
     guid: 29cf699c83a9ed940b6a0e7d9a37402b
   - enabled: 1
-    path: Assets/Levels/12.unity
+    path: Assets/Levels/Clean Sweep.unity
     guid: ec42c54d5810ec14eb067dfd62440e3f
   - enabled: 1
-    path: Assets/Levels/13.unity
+    path: Assets/Levels/Don't Let It Out.unity
     guid: 6266207b374682e46ad0db8da08454f5
   - enabled: 1
-    path: Assets/Levels/14.unity
+    path: Assets/Levels/Straightforward.unity
     guid: 4807c7eef3ef02944bb8e4cab1a5e595
   - enabled: 1
-    path: Assets/Levels/15.unity
+    path: Assets/Levels/Monster House.unity
     guid: 38912e195b797f448bc9f7b57b767c51
   - enabled: 1
-    path: Assets/Levels/16.unity
+    path: Assets/Levels/Slot Machine.unity
     guid: ebb10fe0e65f1f548b398a99c134c8ad
   - enabled: 1
-    path: Assets/Levels/17.unity
+    path: Assets/Levels/Spider.unity
     guid: b268ddea8620bb6488a9ca8cf63e8ac3
   - enabled: 1
-    path: Assets/Levels/18.unity
+    path: Assets/Levels/Under Pressure.unity
     guid: 0f13b1fc664d50a4bb4ffd93106d6d8a
   - enabled: 0
-    path: Assets/Levels/RandomStageTest.unity
+    path: Assets/Levels/Testing/RandomStageTest.unity
     guid: 8ac4f885ee4fbbe46a708fcc833fee6c
